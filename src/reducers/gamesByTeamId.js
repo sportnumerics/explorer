@@ -1,18 +1,13 @@
-import { FETCH_TEAMS } from '../actions/fetchTeams';
+import { FETCH_GAMES } from '../actions/fetchGames';
 import FETCH_STATUS from '../actions/fetchStatus';
-
-function sortByOverallRating(a,b) {
-  return b.ratings.overall - a.ratings.overall;
-}
 
 const initialState = {
   isFetching: false,
-  items: [],
-  sortBy: sortByOverallRating
-};
+  items: []
+}
 
-function teams(state = initialState, action) {
-  if (action.type == FETCH_TEAMS) {
+function games(state = initialState, action) {
+  if (action.type == FETCH_GAMES) {
     switch(action.status) {
       case FETCH_STATUS.FETCHING:
         return Object.assign({}, state, {
@@ -22,7 +17,7 @@ function teams(state = initialState, action) {
       case FETCH_STATUS.SUCCESS:
         return Object.assign({}, state, {
           isFetching: false,
-          items: action.teams,
+          items: action.games,
           error: null
         });
       case FETCH_STATUS.ERROR:
@@ -35,4 +30,13 @@ function teams(state = initialState, action) {
   return state;
 }
 
-export default teams
+function gamesByTeamId(state = {}, action) {
+  if (action.type == FETCH_GAMES) {
+    return Object.assign({}, state, {
+      [action.teamId]: games(state[action.teamId], action)
+    });
+  }
+  return state;
+}
+
+export default gamesByTeamId

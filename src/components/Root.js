@@ -4,17 +4,33 @@ require('styles/App.css');
 import React from 'react'
 import { Provider } from 'react-redux'
 import configureStore from '../stores/configureStore'
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import App from './App'
-import { fetchTeams } from '../actions/fetchTeams';
+import Teams from './Teams'
+import Team from './Team'
+import { fetchTeamsIfNecessary } from '../actions/fetchTeams'
+import { fetchGamesForTeamId } from '../actions/fetchGames'
 
 const store = configureStore();
 
-store.dispatch(fetchTeams());
+const fetchTeams = () => {
+  store.dispatch(fetchTeamsIfNecessary());
+}
+
+const fetchGames = (id) => {
+  store.dispatch(fetchGamesForTeamId(id))
+}
 
 const Root = () => {
   return (
     <Provider store={store}>
-      <App />
+      <Router history={hashHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Teams} onEnter={() => fetchTeams()}/>
+
+          <Route path="/teams/:teamId" component={Team} onEnter={(nextState)=>fetchGames(nextState.params.teamId)}/>
+        </Route>
+      </Router>
     </Provider>
   );
 }

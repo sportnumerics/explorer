@@ -1,12 +1,7 @@
 import fetch from 'isomorphic-fetch';
+import FETCH_STATUS from './fetchStatus';
 
 export const FETCH_TEAMS = 'FETCH_TEAMS';
-
-export const FETCH_STATUS = {
-  FETCHING: 'FETCHING',
-  SUCCESS: 'SUCCESS',
-  ERROR: 'ERROR'
-};
 
 function fetchingTeams() {
   return {
@@ -31,15 +26,29 @@ function fetchTeamsError(error) {
   };
 }
 
-const teamsUrl = 'http://localhost:4000/teams';
+function shouldFetchTeams(state) {
+  return !state.teams || !state.teams.isFetching;
+}
 
-export function fetchTeams() {
+const baseUrl = 'http://localhost:4000/teams';
+
+export default function fetchTeams() {
   return function(dispatch) {
     dispatch(fetchingTeams());
 
-    return fetch(teamsUrl)
+    return fetch(baseUrl)
       .then(response => response.json())
       .then(json => dispatch(fetchTeamsSuccess(json.teams)))
       .catch(error => dispatch(fetchTeamsError(error)))
+  }
+}
+
+export function fetchTeamsIfNecessary() {
+  return function(dispatch, getState) {
+    if (shouldFetchTeams(getState())) {
+      return dispatch(fetchTeams());
+    } else {
+      return Promise.resolve();
+    }
   }
 }
