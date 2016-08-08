@@ -4,7 +4,7 @@ require('styles/App.css');
 import React from 'react'
 import { Provider } from 'react-redux'
 import configureStore from '../configureStore'
-import { Router, Route, IndexRoute, hashHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import App from './App'
 import Teams from './Teams'
 import Team from './Team'
@@ -24,7 +24,7 @@ const fetchGames = (id) => {
 const Root = () => {
   return (
     <Provider store={store}>
-      <Router history={hashHistory}>
+      <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Teams} onEnter={() => fetchTeams()}/>
 

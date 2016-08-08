@@ -16,7 +16,7 @@ const GameList = ({games}) => {
         return (
         <tr key={index}>
           <td><GameDate iso8601dateString={game.date} /></td>
-          <td><Link to={`teams/${game.opponent.id}`}>{game.opponent.name}</Link></td>
+          <td><Link to={`/teams/${game.opponent.id}`}>{game.opponent.name}</Link></td>
           <td><GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} /></td>
           <td><GameResult pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} /></td>
           <td>{round(llsError, 2)}</td>
