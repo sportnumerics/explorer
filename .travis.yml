@@ -12,7 +12,7 @@ script:
 - NODE_ENV=production npm run dist
 deploy:
   provider: s3
-  bucket: sportnumerics-frontend
+  bucket: sportnumerics-explorer
   local_dir: dist
   skip_cleanup: true
   access_key_id:

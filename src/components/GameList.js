@@ -7,7 +7,7 @@ const GameList = ({games}) => {
   return (
     <table>
     <thead>
-      <tr><th>Date</th><th>Opponent</th><th>Result</th><th>LLS Prediction</th><th>LLS Error</th></tr>
+      <tr><th>Date</th><th>Opponent</th><th>Result</th><th>Prediction</th><th>Error</th></tr>
     </thead>
     <tbody>
       {games.map((game, index) => {
