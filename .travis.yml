@@ -1,0 +1,28 @@
+language: node_js
+node_js:
+  - "5.0"
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install
+
+script:
+  - npm run lint
+  - npm run test
+  - NODE_ENV=production npm run dist
+
+deploy:
+  provider: s3
+  access_key_id:
+    secure: "n549DWjEiVx+EsIGYecaAwbpmtB8O9Xo0yxcT89cijRM5iPhmnRnAtaPPI3MOMqRa8YmiA/WndIC/Oc6456I4xoMkjMWq6i/97jUAO1RkNWzBzOzaDIXRaPNRinroy3E8LWdg4mwx1Y/XEKb5nbkQXgZe4Kgfe2oflDMHhR2L8g5N/bfUAt0w7irnjh3iAsUvReCllbSNhilkCSIk3vdmFYECar8eRqwCGz4C1N2P1MGRhUZabutcr6rHmCeW1nR9Auq66HdpLrBcYmuCzwOlJvxjz1HbhLuaY1q23iRrxUHZ0hnrLj9fQaEty3qVF5PNw1OPdgQF62W+jzIusKi4k4TSq9X5CeAjRSB185zv/EQJwRGYj3+0jlYMmbHDSqes+wKWJa/DE2/A+UeeQTelZVgj+wwbkh1LABILJciHWT/mA2/NcHWAAhfg4ze6eAf4tmPx6byNGZeAJmc1n23jFbmwQ0Zxj4UxMXw5wSQaCpYIVNnadhFdflJn20b2ZeFkH20XSf0Rs/8dn2Y3Sh3ggzXCQ9lVo2H4v70H44edbetWap50Kp2pcihPdB2lta4O5FgBmIxI7P6vzz2BWFQX0vyuBfcNm5qy4+UJnHzz19jynjgWIpeYONmUIIo9Rvr9WI7DqCDLLpvFkYJBLFkJVzo+bcFsyQYbnwPEVQAP0E="
+  secret_access_key:
+    secure: "OpkX7VuGlpiF0y/NPlTxP+68T/Af5ggRaELLvdSy6LBKyHlE4QvoEMxPXfUfRsVL77qvfXjj0P43Ryldr/cs5q9QOL7JU4pvunp8DtsYULRPj14C9AjJOkY2MVYuqp4cMaV/J/sVAw0qObgrh1v0eIaPwofF4ryvPI1EplOJFtuYyzRnGZ2+5UHgR/uvPbhJ3kbPFeC372c2h5INk28zGVg55K83QfocKNZCh9ZKDGtbjP2sJ3JgTyPV/ZccWO3sFODOntxEwInd2c1v8+vhHr//tV9cZytommEnlbzWQpqPCa5rq6D+oEvS6IpImdGOY5GwTmUEfk0pyWIJsxCe2H71YfULCZ25zW0SvWSfVR4afxcFCdzKGJ6D2fcVY6rhs617vv3TIr0rwa9Lvoa9cj9Zyoqtpu7hJ74Lv7+BTgaiqrOCNH2jfsBHoMxH77WyTjjVRzFI5zXpLGk26mX/Wu77zCn9CR8KMbV9r4u9Vk50/5nU1dfSy9TIgXfdrH7mhSmgLQaFiG6LMdPtqzhPwpZVThTFWg/SYctrrJ8XlypX5DYdYB1VeQCntFQ9m7+QgXr+wg5T1yxvBpS5D9dWSH0UTK2Hvjoe1+/M4miiVfO60nhvvNGhyyDlN1sPVfG89TKVt7O8T6gOQa2LF23BHj4YnrsOjLYEkPmbBq6iq2M="
+  bucket: sportnumerics-frontend
+  local_dir: dist
+  skip_cleanup: true
+
+after_success:
+  - npm run codecov

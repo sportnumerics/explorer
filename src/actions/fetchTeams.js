@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import FETCH_STATUS from './fetchStatus';
+import config from 'config';
 
 export const FETCH_TEAMS = 'FETCH_TEAMS';
 
@@ -30,7 +31,7 @@ function shouldFetchTeams(state) {
   return !state.teams || !state.teams.isFetching;
 }
 
-const baseUrl = 'http://localhost:4000/teams';
+const baseUrl = `${config.apiUrl}/teams`;
 
 export default function fetchTeams() {
   return function(dispatch) {

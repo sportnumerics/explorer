@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { round } from '../utils/utils';
 
 const TeamList = ({sortBy, teams}) => {
   return (
@@ -9,7 +10,7 @@ const TeamList = ({sortBy, teams}) => {
       </thead>
       <tbody>
         {teams.sort(sortBy).map((team, index) => {
-          return <tr key={team.id}><td>{index+1}</td><td><Link to={`teams/${team.id}`}>{team.name}</Link></td><td>{team.ratings.overall}</td></tr>
+          return <tr key={team.id}><td>{index+1}</td><td><Link to={`teams/${team.id}`}>{team.name}</Link></td><td>{round(team.ratings.overall,2)}</td></tr>
         })}
       </tbody>
     </table>

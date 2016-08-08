@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import FETCH_STATUS from './fetchStatus';
+import config from 'config';
 
 export const FETCH_GAMES = 'FETCH_GAMES';
 
@@ -29,7 +30,7 @@ function fetchGamesError(teamId, error) {
   };
 }
 
-const baseUrl = 'http://localhost:4000/teams';
+const baseUrl = `${config.apiUrl}/teams`;
 
 export function fetchGamesForTeamId(teamId) {
   return function(dispatch) {
