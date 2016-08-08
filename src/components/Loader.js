@@ -6,7 +6,6 @@ const Loader = ({fetching, error, children}) => {
   } else if (error) {
     return (<div>
       <div>Error: {error.message}</div>
-      <div>Stack: {error.stack}</div>
     </div>);
   } else {
     return children;

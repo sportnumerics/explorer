@@ -1,6 +1,7 @@
 import React from 'react'
 import GameDate from './GameDate'
 import GameResult from './GameResult'
+import { Link } from 'react-router'
 import { round } from '../utils/utils'
 
 const GameList = ({games}) => {
@@ -15,7 +16,7 @@ const GameList = ({games}) => {
         return (
         <tr key={index}>
           <td><GameDate iso8601dateString={game.date} /></td>
-          <td>{game.opponent.name}</td>
+          <td><Link to={`teams/${game.opponent.id}`}>{game.opponent.name}</Link></td>
           <td><GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} /></td>
           <td><GameResult pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} /></td>
           <td>{round(llsError, 2)}</td>

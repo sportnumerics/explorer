@@ -28,7 +28,7 @@ function fetchTeamsError(error) {
 }
 
 function shouldFetchTeams(state) {
-  return !state.teams || !state.teams.isFetching;
+  return state.teams.items.length == 0 && !state.teams.isFetching;
 }
 
 const baseUrl = `${config.apiUrl}/teams`;
@@ -45,7 +45,7 @@ export default function fetchTeams() {
 }
 
 export function fetchTeamsIfNecessary() {
-  return function(dispatch, getState) {
+  return (dispatch, getState) => {
     if (shouldFetchTeams(getState())) {
       return dispatch(fetchTeams());
     } else {
