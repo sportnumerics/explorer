@@ -1,46 +1,12 @@
-import fetch from 'isomorphic-fetch';
-import FETCH_STATUS from './fetchStatus';
-import config from 'config';
+import { createAction } from 'redux-actions';
+import gamesByTeamId from '../services/gamesByTeamId';
 
 export const FETCH_GAMES = 'FETCH_GAMES';
 
-function fetchingGames(teamId) {
-  return {
-    type: FETCH_GAMES,
-    status: FETCH_STATUS.FETCHING,
-    teamId
-  };
+function metaCreator(div, teamId) {
+  return {div, teamId};
 }
 
-function fetchGamesSuccess(teamId, games) {
-  return {
-    type: FETCH_GAMES,
-    status: FETCH_STATUS.SUCCESS,
-    teamId,
-    games
-  };
-}
+let fetchGamesByTeamId = createAction(FETCH_GAMES, gamesByTeamId, metaCreator);
 
-function fetchGamesError(teamId, error) {
-  return {
-    type: FETCH_GAMES,
-    status: FETCH_STATUS.ERROR,
-    teamId,
-    error
-  };
-}
-
-const baseUrl = `${config.apiUrl}/teams`;
-
-export function fetchGamesForTeamId(teamId) {
-  return function(dispatch) {
-    dispatch(fetchingGames(teamId));
-
-    let url = `${baseUrl}/${teamId}/schedule`;
-
-    return fetch(url)
-      .then(response => response.json())
-      .then(json => dispatch(fetchGamesSuccess(teamId, json.schedule)))
-      .catch(error => dispatch(fetchGamesError(teamId, error)))
-  }
-}
+export default fetchGamesByTeamId

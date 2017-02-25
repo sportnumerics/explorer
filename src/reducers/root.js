@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import teams from './teams'
+import teamsByDiv from './teamsByDiv'
 import gamesByTeamId from './gamesByTeamId'
 
 const rootReducer = combineReducers({
-  teams,
+  teamsByDiv,
   gamesByTeamId
 });
 

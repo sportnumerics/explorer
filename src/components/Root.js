@@ -1,24 +1,24 @@
 require('normalize.css/normalize.css');
-require('styles/App.css');
+require('styles/App.scss');
 
 import React from 'react'
 import { Provider } from 'react-redux'
 import configureStore from '../configureStore'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, IndexRedirect, browserHistory } from 'react-router'
 import App from './App'
 import Teams from './Teams'
 import Team from './Team'
 import { fetchTeamsIfNecessary } from '../actions/fetchTeams'
-import { fetchGamesForTeamId } from '../actions/fetchGames'
+import fetchGamesByTeamId from '../actions/fetchGames'
 
 const store = configureStore();
 
-const fetchTeams = () => {
-  store.dispatch(fetchTeamsIfNecessary());
+const fetchTeams = (div) => {
+  store.dispatch(fetchTeamsIfNecessary(div));
 }
 
-const fetchGames = (id) => {
-  store.dispatch(fetchGamesForTeamId(id))
+const fetchGames = (div,id) => {
+  store.dispatch(fetchGamesByTeamId(div,id))
 }
 
 const Root = () => {
@@ -26,9 +26,11 @@ const Root = () => {
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={App}>
-          <IndexRoute component={Teams} onEnter={() => fetchTeams()}/>
+          // <IndexRoute component={Teams} onEnter={() => fetchTeams(1)}/>
+          <IndexRedirect to="/divs/1" />
 
-          <Route path="/teams/:teamId" component={Team} onEnter={(nextState)=>fetchGames(nextState.params.teamId)}/>
+          <Route path="/divs/:div" component={Teams} onEnter={(nextState)=>fetchTeams(nextState.params.div)}/>
+          <Route path="/divs/:div/teams/:teamId" component={Team} onEnter={(nextState)=>fetchGames(nextState.params.div, nextState.params.teamId)}/>
         </Route>
       </Router>
     </Provider>

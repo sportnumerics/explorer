@@ -1,55 +1,24 @@
-import fetch from 'isomorphic-fetch';
-import FETCH_STATUS from './fetchStatus';
-import config from 'config';
+import { createAction } from 'redux-actions';
+import teams from '../services/teams';
 
 export const FETCH_TEAMS = 'FETCH_TEAMS';
 
-function fetchingTeams() {
-  return {
-    type: FETCH_TEAMS,
-    status: FETCH_STATUS.FETCHING
-  };
+function metaCreator(div) {
+  return {div};
 }
 
-function fetchTeamsSuccess(teams) {
-  return {
-    type: FETCH_TEAMS,
-    status: FETCH_STATUS.SUCCESS,
-    teams
-  };
+let fetchTeams = createAction(FETCH_TEAMS, teams, metaCreator);
+
+export default fetchTeams
+
+function shouldFetchTeams(state, div) {
+  return !state.teamsByDiv[div];
 }
 
-function fetchTeamsError(error) {
-  return {
-    type: FETCH_TEAMS,
-    status: FETCH_STATUS.ERROR,
-    error
-  };
-}
-
-function shouldFetchTeams(state) {
-  return state.teams.items.length == 0 && !state.teams.isFetching;
-}
-
-const baseUrl = `${config.apiUrl}/teams`;
-
-export default function fetchTeams() {
-  return function(dispatch) {
-    dispatch(fetchingTeams());
-
-    return fetch(baseUrl)
-      .then(response => response.json())
-      .then(json => dispatch(fetchTeamsSuccess(json.teams)))
-      .catch(error => dispatch(fetchTeamsError(error)))
-  }
-}
-
-export function fetchTeamsIfNecessary() {
+export function fetchTeamsIfNecessary(div) {
   return (dispatch, getState) => {
-    if (shouldFetchTeams(getState())) {
-      return dispatch(fetchTeams());
-    } else {
-      return Promise.resolve();
+    if (shouldFetchTeams(getState(), div)) {
+      dispatch(fetchTeams(div));
     }
   }
 }
