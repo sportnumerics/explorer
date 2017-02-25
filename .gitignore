@@ -31,3 +31,7 @@ bower_components/
 
 # Distribution
 dist/
+
+# Atom
+.tags
+.tags1

@@ -1,0 +1,52 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Template for sportnumerics explorer",
+  "Parameters": {
+    "StageParameter": {
+      "Type": "String",
+      "Default": "dev",
+      "AllowedValues": ["dev", "prod"],
+      "Description": "Stage to deploy"
+    }
+  },
+  "Resources": {
+    "DeploymentBucket": {
+      "Type" : "AWS::S3::Bucket",
+      "Properties" : {
+        "AccessControl" : "PublicRead",
+        "BucketName" : {
+          "Fn::Join": [
+            "-",
+            [
+              "sportnumerics-explorer",
+              {
+                "Ref": "StageParameter"
+              }
+            ]
+          ]
+        },
+        "WebsiteConfiguration" : {
+          "IndexDocument": "index.html"
+        }
+      }
+    },
+    "BucketPolicy": {
+       "Type" : "AWS::S3::BucketPolicy",
+       "Properties" : {
+          "Bucket" : {
+            "Ref": "DeploymentBucket"
+          },
+          "PolicyDocument" : {
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": "s3:GetObject",
+                "Principal": "*",
+                "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "DeploymentBucket" } , "/*" ]]}
+              }
+            ]
+          }
+       }
+    }
+  }
+}
