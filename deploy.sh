@@ -1,5 +1,11 @@
 set -ex
 
+./decrypt.sh
+source ./env/env.sh
+unset AWS_SESSION_TOKEN
+
+pip install --upgrade awscli
+
 REGION="ap-southeast-2"
 APP_NAME="sportnumerics-explorer"
 # CLOUDFRONT_ID="E38ON9IJP6XEDD"
