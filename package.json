@@ -81,6 +81,6 @@
     "redux-thunk": "^2.1.0"
   },
   "lambci": {
-    "cmd": "npm install && npm "
+    "cmd": "npm install && npm test && ./deploy.sh"
   }
 }
