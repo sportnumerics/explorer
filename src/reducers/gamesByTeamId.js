@@ -1,10 +1,11 @@
-import { FETCH_GAMES } from '../actions/fetchGames'
+import { FETCH_GAMES, gamesKey } from '../actions/fetchGames'
 import handleFetch from '../utils/handleFetch';
 
 function gamesByTeamId(state = {}, action) {
   if (action.type == FETCH_GAMES) {
+    let key = gamesKey(action.meta.year, action.meta.teamId);
     return Object.assign({}, state, {
-      [action.meta.teamId]: handleFetch(state[action.meta.teamId], action)
+      [key]: handleFetch(state[key], action)
     });
   }
   return state;

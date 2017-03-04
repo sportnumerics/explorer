@@ -4,7 +4,7 @@ import GameResult from './GameResult'
 import { Link } from 'react-router'
 import { round } from '../utils/utils'
 
-const GameList = ({games, div}) => {
+const GameList = ({games, year, div}) => {
   return (
     <table>
     <thead>
@@ -12,14 +12,17 @@ const GameList = ({games, div}) => {
     </thead>
     <tbody>
       {games.map((game, index) => {
-        let llsError = Math.abs(game.result.pointsFor-game.predictions.llsGoalsFor) + Math.abs(game.result.pointsAgainst-game.predictions.llsGoalsAgainst);
+        let llsError;
+        if (game.result) {
+          llsError = Math.abs(game.result.pointsFor-game.predictions.llsGoalsFor) + Math.abs(game.result.pointsAgainst-game.predictions.llsGoalsAgainst);
+        }
         return (
         <tr key={index}>
           <td><GameDate iso8601dateString={game.date} /></td>
-          <td><Link to={`/divs/${div}/teams/${game.opponent.id}`}>{game.opponent.name}</Link></td>
-          <td><GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} /></td>
+          <td><Link to={`/${year}/divs/${div}/teams/${game.opponent.id}`}>{game.opponent.name}</Link></td>
+          <td>{game.result ? (<GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} />) : "" }</td>
           <td><GameResult pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} /></td>
-          <td>{round(llsError, 2)}</td>
+          <td>{llsError ? round(llsError, 2) : ""}</td>
         </tr>
       )})}
     </tbody>

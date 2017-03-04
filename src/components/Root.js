@@ -13,12 +13,12 @@ import fetchGamesByTeamId from '../actions/fetchGames'
 
 const store = configureStore();
 
-const fetchTeams = (div) => {
-  store.dispatch(fetchTeamsIfNecessary(div));
+const fetchTeams = (year, div) => {
+  store.dispatch(fetchTeamsIfNecessary(year,div));
 }
 
-const fetchGames = (div,id) => {
-  store.dispatch(fetchGamesByTeamId(div,id))
+const fetchGames = (year,div,id) => {
+  store.dispatch(fetchGamesByTeamId(year,div,id))
 }
 
 const Root = () => {
@@ -27,10 +27,10 @@ const Root = () => {
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           // <IndexRoute component={Teams} onEnter={() => fetchTeams(1)}/>
-          <IndexRedirect to="/divs/1" />
+          <IndexRedirect to="2016/divs/1" />
 
-          <Route path="/divs/:div" component={Teams} onEnter={(nextState)=>fetchTeams(nextState.params.div)}/>
-          <Route path="/divs/:div/teams/:teamId" component={Team} onEnter={(nextState)=>fetchGames(nextState.params.div, nextState.params.teamId)}/>
+          <Route path="/:year/divs/:div" component={Teams} onEnter={(nextState)=>fetchTeams(nextState.params.year, nextState.params.div)}/>
+          <Route path="/:year/divs/:div/teams/:teamId" component={Team} onEnter={(nextState)=>fetchGames(nextState.params.year, nextState.params.div, nextState.params.teamId)}/>
         </Route>
       </Router>
     </Provider>

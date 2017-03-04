@@ -1,8 +1,14 @@
-import { FETCH_TEAMS } from '../actions/fetchTeams';
+import { FETCH_TEAMS, teamsKey } from '../actions/fetchTeams';
 import handleFetch from '../utils/handleFetch';
 
 function sortByOverallRating(a,b) {
-  return b.ratings.overall - a.ratings.overall;
+  if (a.ratings && b.ratings) {
+    return b.ratings.overall - a.ratings.overall;
+  } else if (a.ratings) {
+    return -1;
+  } else {
+    return 1;
+  }
 }
 
 const initialState = {
@@ -11,8 +17,9 @@ const initialState = {
 
 function teamsByDiv(state = initialState, action) {
   if (action.type == FETCH_TEAMS) {
+    let key = teamsKey(action.meta.year, action.meta.div);
     return Object.assign({}, state, {
-      [action.meta.div]: handleFetch(state[action.meta.div], action)
+      [key]: handleFetch(state[key], action)
     });
   }
   return state
