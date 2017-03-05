@@ -14,19 +14,50 @@
       "Type" : "AWS::S3::Bucket",
       "Properties" : {
         "AccessControl" : "PublicRead",
-        "BucketName" : {
-          "Fn::Join": [
-            "-",
-            [
-              "sportnumerics-explorer",
-              {
-                "Ref": "StageParameter"
-              }
-            ]
-          ]
-        },
+        "BucketName" : {"Fn::Join": ["-", [ "sportnumerics-explorer", { "Ref": "StageParameter" } ]]},
         "WebsiteConfiguration" : {
           "IndexDocument": "index.html"
+        }
+      }
+    },
+    "CloudfrontDistribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "CustomErrorResponses": [
+            {
+              "ErrorCode": 404,
+              "ResponseCode": 200,
+              "ResponsePagePath": "/index.html",
+            }
+          ],
+          "DefaultCacheBehavior": {
+            "ForwardedValues": {
+              "QueryString": false
+            },
+            "TargetOriginId": "DefaultOrigin",
+            "ViewerProtocolPolicy": "redirect-to-https"
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "Origins": [
+            {
+              "DomainName": {
+                "Fn::Join": [ ".",
+                  [
+                    {"Fn::Join": ["-", [ "sportnumerics-explorer", { "Ref": "StageParameter" } ]]},
+                    "s3.amazonaws.com"
+                  ]
+                ]
+              },
+              "Id": "DefaultOrigin",
+              "S3OriginConfig": {}
+            }
+          ],
+          "PriceClass": "PriceClass_All",
+          "ViewerCertificate": {
+            "CloudFrontDefaultCertificate": true
+          }
         }
       }
     },
@@ -47,6 +78,12 @@
             ]
           }
        }
+    }
+  },
+  "Outputs": {
+    "CloudfrontArn": {
+      "Description": "Cloudfront distribution for sportnumerics frontend",
+      "Value": { "Ref": "CloudfrontDistribution" }
     }
   }
 }

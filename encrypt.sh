@@ -32,7 +32,7 @@ confirm () {
 }
 
 oneChanged=false
-for source in "config/env.sh"
+for source in "env/env.sh"
 do
   input=$source
   output=$source.enc

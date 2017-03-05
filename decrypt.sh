@@ -6,7 +6,7 @@ function onfail() {
 set -e
 trap onfail ERR
 
-for source in "config/env.sh"
+for source in "env/env.sh"
 do
   openssl enc -aes-256-cbc -k $SPORTNUMERICS_KEY -d -a -in $source.enc -out $source
 done
