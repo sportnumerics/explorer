@@ -21,4 +21,5 @@ aws cloudformation deploy --stack-name $STACK_NAME --parameter-overrides "StageP
 CLOUDFRONT_ID=$(aws cloudformation describe-stacks --stack-name sportnumerics-explorer-dev --query 'Stacks[0].Outputs[?OutputKey==`CloudfrontArn`].OutputValue' --output text)
 
 aws s3 sync dist "s3://$BUCKET_NAME" --delete
+aws configure set preview.cloudfront true
 aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /index.html /access/app.js /access/app.js.map /logo-196.png /favicon.ico
