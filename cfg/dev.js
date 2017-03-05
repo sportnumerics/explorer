@@ -5,8 +5,6 @@ let webpack = require('webpack');
 let baseConfig = require('./base');
 let defaultSettings = require('./defaults');
 
-// Add needed plugins here
-let BowerWebpackPlugin = require('bower-webpack-plugin');
 
 let config = Object.assign({}, baseConfig, {
   entry: [
@@ -18,22 +16,16 @@ let config = Object.assign({}, baseConfig, {
   devtool: 'eval',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new BowerWebpackPlugin({
-      searchResolveModulesDirectories: false
-    })
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: defaultSettings.getDefaultModules()
 });
 
 // Add needed loaders to the defaults here
-config.module.loaders.push({
+config.module.rules.push({
   test: /\.(js|jsx)$/,
-  loader: 'react-hot!babel-loader',
-  include: [].concat(
-    config.additionalPaths,
-    [ path.join(__dirname, '/../src') ]
-  )
+  loader: 'react-hot-loader!babel-loader',
+  include: [ path.join(__dirname, '/../src') ]
 });
 
 module.exports = config;

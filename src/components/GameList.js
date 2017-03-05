@@ -20,9 +20,9 @@ const GameList = ({games, year, div}) => {
         <tr key={index}>
           <td><GameDate iso8601dateString={game.date} /></td>
           <td><Link to={`/${year}/divs/${div}/teams/${game.opponent.id}`}>{game.opponent.name}</Link></td>
-          <td>{game.result ? (<GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} />) : "" }</td>
+          <td>{game.result ? (<GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} />) : '' }</td>
           <td><GameResult pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} /></td>
-          <td>{llsError ? round(llsError, 2) : ""}</td>
+          <td>{llsError ? round(llsError, 2) : ''}</td>
         </tr>
       )})}
     </tbody>

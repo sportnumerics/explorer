@@ -4,12 +4,13 @@ const srcPath = path.join(__dirname, '/../src');
 const dfltPort = 8000;
 function getDefaultModules() {
   return {
-    preLoaders: [{
+    rules: [
+      {
         test: /\.(js|jsx)$/,
         include: srcPath,
+        enforce: 'pre',
         loader: 'eslint-loader'
-      }],
-    loaders: [
+      },
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader!postcss-loader'
@@ -40,23 +41,23 @@ function getDefaultModules() {
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url?limit=10000&mimetype=application/font-woff"
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url?limit=10000&mimetype=application/font-woff"
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url?limit=10000&mimetype=application/octet-stream"
+        loader: "url-loader?limit=10000&mimetype=application/octet-stream"
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "file"
+        loader: "file-loader"
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url?limit=10000&mimetype=image/svg+xml"
+        loader: "url-loader?limit=10000&mimetype=image/svg+xml"
       }
     ]
   };
