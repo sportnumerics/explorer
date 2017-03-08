@@ -1,5 +1,9 @@
 import React from 'react'
 
-const GameResult = ({pointsFor, pointsAgainst}) => <span>{Math.round(pointsFor)}-{Math.round(pointsAgainst)}</span>
+function normalize(points) {
+  return Math.max(Math.round(points), 0);
+}
+
+const GameResult = ({pointsFor, pointsAgainst}) => <span>{normalize(pointsFor)}-{normalize(pointsAgainst)}</span>
 
 export default GameResult
