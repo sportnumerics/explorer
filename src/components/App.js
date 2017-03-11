@@ -1,7 +1,6 @@
 import React from 'react'
 import Navigation from './Navigation'
 import { Grid, Row, Col } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
 
 const App = ({children, params}) => {
   return (

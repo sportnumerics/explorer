@@ -62,7 +62,7 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap-sass": "^3.3.7",
     "core-js": "^2.0.0",
     "es6-promise": "^3.2.1",
     "font-awesome": "^4.7.0",

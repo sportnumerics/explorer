@@ -4,7 +4,7 @@ require('styles/App.scss');
 import React from 'react'
 import { Provider } from 'react-redux'
 import configureStore from '../configureStore'
-import { Router, Route, IndexRoute, IndexRedirect, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import App from './App'
 import Teams from './Teams'
 import Team from './Team'
