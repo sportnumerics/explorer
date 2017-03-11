@@ -3,10 +3,10 @@ import Navigation from './Navigation'
 import { Grid, Row, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 
-const App = ({children}) => {
+const App = ({children, params}) => {
   return (
     <Grid>
-      <Row><Navigation /></Row>
+      <Row><Navigation params={params}/></Row>
       <Row><Col md={6} mdOffset={3} xs={12}>{children}</Col></Row>
     </Grid>
   );
