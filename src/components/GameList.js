@@ -3,10 +3,11 @@ import GameDate from './GameDate'
 import GameResult from './GameResult'
 import { Link } from 'react-router'
 import { round } from '../utils/utils'
+import { Table } from 'react-bootstrap'
 
 const GameList = ({games, year, div}) => {
   return (
-    <table>
+    <Table>
     <thead>
       <tr><th>Date</th><th>Opponent</th><th>Result</th><th>Prediction</th><th>Error</th></tr>
     </thead>
@@ -26,7 +27,7 @@ const GameList = ({games, year, div}) => {
         </tr>
       )})}
     </tbody>
-    </table>
+    </Table>
   );
 }
 

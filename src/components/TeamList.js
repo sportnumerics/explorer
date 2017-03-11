@@ -1,10 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router';
-import { round } from '../utils/utils';
+import React from 'react'
+import { Link } from 'react-router'
+import { round } from '../utils/utils'
+import { Table } from 'react-bootstrap'
 
 const TeamList = ({sortBy, teams, year, div}) => {
   return (
-    <table>
+    <Table>
       <thead>
         <tr><th /><th>Team</th><th>Rating</th></tr>
       </thead>
@@ -13,7 +14,7 @@ const TeamList = ({sortBy, teams, year, div}) => {
           return <tr key={team.id}><td>{index+1}</td><td><Link to={`/${year}/divs/${div}/teams/${team.id}`}>{team.name}</Link></td><td>{team.ratings ? round(team.ratings.overall,2) : ''}</td></tr>
         })}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

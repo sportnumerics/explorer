@@ -27,7 +27,7 @@ const Root = () => {
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           // <IndexRoute component={Teams} onEnter={() => fetchTeams(1)}/>
-          <IndexRedirect to="2016/divs/1" />
+          <IndexRedirect to="2017/divs/1" />
 
           <Route path="/:year/divs/:div" component={Teams} onEnter={(nextState)=>fetchTeams(nextState.params.year, nextState.params.div)}/>
           <Route path="/:year/divs/:div/teams/:teamId" component={Team} onEnter={(nextState)=>fetchGames(nextState.params.year, nextState.params.div, nextState.params.teamId)}/>

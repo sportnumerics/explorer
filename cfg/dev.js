@@ -16,7 +16,12 @@ let config = Object.assign({}, baseConfig, {
   devtool: 'eval',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    })
   ],
   module: defaultSettings.getDefaultModules()
 });
