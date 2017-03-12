@@ -1,5 +1,9 @@
 /* Base Application Styles */
 
+$primary-color: #A93838;
+$secondary-color: #2C4670;
+$tertiary-color: #A0A737;
+
 .spinner-container, .error-container {
   padding-top: 10rem;
   text-align: center;
@@ -16,6 +20,13 @@
 body {
   padding-top: 70px;
 }
+
+$brand-primary: $primary-color;
+$link-color: lighten($secondary-color, 15%);
+
+// nav
+$navbar-inverse-bg: darken($primary-color, 15%);
+$navbar-inverse-link-color: lighten(#000, 80%);
 
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
