@@ -41,13 +41,16 @@ const Navigation = ({params}) => {
           <Navbar.Brand>
             S#
           </Navbar.Brand>
+          <Navbar.Toggle />
       </Navbar.Header>
-      <Nav>
-        <NavDropdown title='Years' id='years-dropdown'>
-          { years.map(year => <YearMenuItem key={year.id} currentDiv={params.div} toYear={year.id} />) }
-        </NavDropdown>
-        { divs.map(div => <DivLink key={div.id} currentYear={params.year} toDiv={div} />) }
-      </Nav>
+      <Navbar.Collapse>
+        <Nav>
+          <NavDropdown title='Years' id='years-dropdown'>
+            { years.map(year => <YearMenuItem key={year.id} currentDiv={params.div} toYear={year.id} />) }
+          </NavDropdown>
+          { divs.map(div => <DivLink key={div.id} currentYear={params.year} toDiv={div} />) }
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 }
