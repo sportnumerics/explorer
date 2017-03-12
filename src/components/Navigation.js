@@ -36,7 +36,7 @@ const DivLink = ({currentYear, toDiv}) => (
 
 const Navigation = ({params}) => {
   return (
-    <Navbar inverse fixedTop>
+    <Navbar inverse fixedTop collapseOnSelect>
       <Navbar.Header>
           <Navbar.Brand>
             S#
