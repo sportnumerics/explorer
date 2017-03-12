@@ -10,9 +10,7 @@ RUN pip install --upgrade awscli
 
 ADD package.json npm-shrinkwrap.json ./
 
-RUN npm rebuild
-
-RUN npm install --verbose
+RUN npm update && npm install --verbose
 
 ADD . .
 
