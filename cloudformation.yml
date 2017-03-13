@@ -8,6 +8,12 @@ Parameters:
     - dev
     - prod
     Description: Stage to deploy
+Mappings:
+  StageToAliasMap:
+    dev:
+      alias: dev.sportnumerics.com
+    prod:
+      alias: prod.sportnumerics.com
 Resources:
   DeploymentBucket:
     Type: AWS::S3::Bucket
@@ -24,6 +30,11 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        Aliases:
+          - Fn::FindInMap:
+            - StageToAliasMap
+            - Ref: StageParameter
+            - alias
         CustomErrorResponses:
         - ErrorCode: 404
           ResponseCode: 200
@@ -48,7 +59,8 @@ Resources:
           S3OriginConfig: {}
         PriceClass: PriceClass_All
         ViewerCertificate:
-          CloudFrontDefaultCertificate: true
+          AcmCertificateArn: arn:aws:acm:us-east-1:265978616089:certificate/5185a1b4-e9c5-4c45-86d6-5aefa73c66c8
+          SslSupportMethod: sni-only
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:

@@ -9,7 +9,7 @@ const Loader = ({fetching, error, children}) => {
       <div className='error-container'><i className='error fa fa-exclamation-triangle fa-2x'></i>Error: {error.message}</div>
     </div>);
   } else {
-    return children;
+    return <div>{children}</div>;
   }
 }
 

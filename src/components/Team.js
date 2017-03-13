@@ -3,10 +3,14 @@ import { connect } from 'react-redux'
 import GameList from './GameList'
 import Loader from './Loader'
 import { gamesKey } from '../actions/fetchGames';
+import { teamsKey } from '../actions/fetchTeams';
+import _ from 'lodash';
+import { PageHeader } from 'react-bootstrap';
 
-const Team = ({isFetching, error, result, year, div}) => (
+const Team = ({isFetching, error, games, team, year, div}) => (
   <Loader fetching={isFetching} error={error}>
-    <GameList games={result} year={year} div={div}/>
+    <PageHeader>{team && team.name} <small>({year})</small></PageHeader>
+    <GameList games={games} year={year} div={div}/>
   </Loader>
 );
 
@@ -15,15 +19,23 @@ const mapStateToProps = (state, ownProps) => {
   const div = ownProps.params.div;
   const teamId = ownProps.params.teamId;
 
-  const { isFetching, error, result } = state.gamesByTeamId[gamesKey(year, teamId)] || {
+  const asyncGames = state.gamesByTeamId[gamesKey(year, teamId)] || {
     isFetching: true,
     result: []
   };
 
+  const asyncTeams = state.teamsByDiv[teamsKey(year, div)] || {
+    isFetching: true,
+    result: []
+  };
+
+  const team = _.find(asyncTeams.result, { id: parseInt(teamId) });
+
   return {
-    isFetching,
-    error,
-    result,
+    isFetching: asyncGames.isFetching || asyncTeams.isFetching,
+    error: asyncGames.error || asyncTeams.error,
+    games: asyncGames.result,
+    team,
     year,
     div
   };

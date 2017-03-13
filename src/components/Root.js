@@ -18,7 +18,8 @@ const fetchTeams = (year, div) => {
 }
 
 const fetchGames = (year,div,id) => {
-  store.dispatch(fetchGamesByTeamId(year,div,id))
+  store.dispatch(fetchTeamsIfNecessary(year,div));
+  store.dispatch(fetchGamesByTeamId(year,div,id));
 }
 
 const Root = () => {
