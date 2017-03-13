@@ -12,7 +12,7 @@ ADD package.json npm-shrinkwrap.json ./
 
 RUN npm install node-sass
 
-RUN npm install --verbose
+RUN npm install
 
 ADD . .
 
