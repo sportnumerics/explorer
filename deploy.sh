@@ -12,7 +12,7 @@ STAGE=${STAGE:-dev}
 STACK_NAME="$APP_NAME-$STAGE"
 BUCKET_NAME="$APP_NAME-$STAGE"
 CHANGE_SET_NAME="check-changeset"
-TEMPLATE_FILE="cloudformation.json"
+TEMPLATE_FILE="cloudformation.yml"
 
 aws configure set region $REGION
 
