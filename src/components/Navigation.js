@@ -1,23 +1,24 @@
 import React from 'react'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { connect } from 'react-redux'
 
-const divs = [
-  {
-    'id': '1',
-    'name': 'NCAA Div 1'
-  },
-  {
-    'id': '2',
-    'name': 'NCAA Div 2'
-  },
-  {
-    'id': '3',
-    'name': 'NCAA Div 3'
-  }
-];
+// const divs = [
+//   {
+//     'id': '1',
+//     'name': 'NCAA Div 1'
+//   },
+//   {
+//     'id': '2',
+//     'name': 'NCAA Div 2'
+//   },
+//   {
+//     'id': '3',
+//     'name': 'NCAA Div 3'
+//   }
+// ];
 
-const years = [
+const YEARS = [
   {
     id: '2017'
   },
@@ -31,10 +32,10 @@ const YearMenuItem = ({currentDiv, toYear, onSelect}) => (
 )
 
 const DivLink = ({currentYear, toDiv, onSelect}) => (
-  <LinkContainer to={`/${currentYear}/divs/${toDiv.id}`} onSelect={onSelect}><NavItem>{toDiv.name}</NavItem></LinkContainer>
+  <LinkContainer to={`/${currentYear}/divs/${toDiv.id}`} onSelect={onSelect}><NavItem>{toDiv.title}</NavItem></LinkContainer>
 )
 
-const Navigation = ({params}) => {
+const Navigation = ({params, years, divs}) => {
   return (
     <Navbar inverse fixedTop collapseOnSelect>
       <Navbar.Header>
@@ -48,11 +49,25 @@ const Navigation = ({params}) => {
       <NavDropdown title='Years' id='basic-nav-dropdown'>
         { years.map((year, i) => <YearMenuItem key={i} currentDiv={params.div} toYear={year.id} />) }
       </NavDropdown>
-      { divs.map((div, i) => <DivLink key={i} currentYear={params.year} toDiv={div} />) }
+      { divs && divs.map((div, i) => <DivLink key={i} currentYear={params.year} toDiv={div} />) }
       </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
 }
 
-export default Navigation;
+const mapStateToProps = (state, ownProps) => {
+  const params = ownProps.params;
+
+  const divs = state.divsByYear[params.year] || {
+    isFetching: true
+  };
+
+  return {
+    params: params,
+    years: YEARS,
+    divs: divs.result
+  };
+};
+
+export default connect(mapStateToProps)(Navigation);
