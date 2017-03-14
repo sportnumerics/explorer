@@ -39,7 +39,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $footer-height: 60px;
 
 body {
-  margin-bottom: $footer-height;
+  margin-bottom: $footer-height + 20px;
 }
 
 .footer {
@@ -48,9 +48,10 @@ body {
   width: 100%;
   height: $footer-height;
   background-color: $gray-lighter;
+  text-align: center;
 
   p {
-    margin-top: 20px;
+    margin-top: 15px;
     color: $gray-light;
   }
 }
