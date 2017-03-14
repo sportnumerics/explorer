@@ -33,6 +33,7 @@ const Root = () => {
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={App} >
+          <IndexRedirect to="2017" />
           <Route path="/:year" onEnter={(nextState) => fetchDivs(nextState.params.year)} >
             <IndexRedirect to="divs/1" />
 
