@@ -68,6 +68,7 @@
     "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "https://registry.npmjs.org/lodash/-/lodash-4.17.4.tgz",
+    "moment": "^2.17.1",
     "normalize.css": "^4.0.0",
     "react": "^15.0.0",
     "react-bootstrap": "^0.30.8",

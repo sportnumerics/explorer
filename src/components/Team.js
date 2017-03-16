@@ -6,11 +6,13 @@ import { gamesKey } from '../actions/fetchGames';
 import { teamsKey } from '../actions/fetchTeams';
 import _ from 'lodash';
 import { PageHeader } from 'react-bootstrap';
+import LastModifiedDate from './LastModifiedDate';
 
-const Team = ({isFetching, error, games, team, year, div}) => (
+const Team = ({isFetching, error, result, team, year, div}) => (
   <Loader fetching={isFetching} error={error}>
     <PageHeader>{team && team.name} <small>({year})</small></PageHeader>
-    <GameList games={games} year={year} div={div}/>
+    <GameList games={result && result.schedule} year={year} div={div}/>
+    <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
   </Loader>
 );
 
@@ -21,20 +23,20 @@ const mapStateToProps = (state, ownProps) => {
 
   const asyncGames = state.gamesByTeamId[gamesKey(year, teamId)] || {
     isFetching: true,
-    result: []
+    result: {}
   };
 
   const asyncTeams = state.teamsByDiv[teamsKey(year, div)] || {
     isFetching: true,
-    result: []
+    result: {}
   };
 
-  const team = _.find(asyncTeams.result, { id: parseInt(teamId) });
+  const team = _.find(asyncTeams.result.teams, { id: parseInt(teamId) });
 
   return {
     isFetching: asyncGames.isFetching || asyncTeams.isFetching,
     error: asyncGames.error || asyncTeams.error,
-    games: asyncGames.result,
+    result: asyncGames.result,
     team,
     year,
     div

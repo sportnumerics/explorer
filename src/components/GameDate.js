@@ -1,8 +1,9 @@
 import React from 'react'
+import moment from 'moment'
 
 const GameDate = ({iso8601dateString}) => {
-  let date = new Date(iso8601dateString);
-  let dateString = `${date.getMonth()+1}/${date.getDate()+1}`
+  let date = moment(iso8601dateString);
+  let dateString = date.format('M/D');
   return <span>{dateString}</span>
 }
 

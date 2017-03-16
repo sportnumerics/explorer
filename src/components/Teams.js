@@ -5,11 +5,13 @@ import Loader from './Loader';
 import { teamsKey } from '../actions/fetchTeams';
 import _ from 'lodash';
 import { PageHeader } from 'react-bootstrap';
+import LastModifiedDate from './LastModifiedDate';
 
-const Teams = ({isFetching, error, teams, sortBy, year, div}) => {
+const Teams = ({isFetching, error, result, sortBy, year, div}) => {
   return (<Loader fetching={isFetching} error={error}>
     <PageHeader>{div && div.title} <small>({year})</small></PageHeader>
-    <TeamList teams={teams} sortBy={sortBy} year={year} div={div.id}/>
+    <TeamList teams={result && result.teams} sortBy={sortBy} year={year} div={div.id}/>
+    <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
   </Loader>)
 };
 
@@ -23,7 +25,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const asyncDivs = state.divsByYear[year] || {
     isFetching: true,
-    result: []
+    result: {}
   }
 
   const sortBy = state.teamsByDiv.sortBy;
@@ -33,7 +35,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     isFetching: asyncTeams.isFetching || asyncDivs.isFetching,
     error: asyncTeams.error || asyncDivs.error,
-    teams: asyncTeams.result,
+    result: asyncTeams.result,
     sortBy,
     year,
     div
