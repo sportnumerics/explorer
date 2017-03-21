@@ -1,5 +1,5 @@
-require('normalize.css/normalize.css');
-require('styles/App.scss');
+import 'normalize.css/normalize.css'
+import 'styles/App.scss'
 
 import React from 'react'
 import { Provider } from 'react-redux'
@@ -11,22 +11,40 @@ import Team from './Team'
 import { fetchTeamsIfNecessary } from '../actions/fetchTeams'
 import fetchGamesByTeamId from '../actions/fetchGames'
 import { fetchDivsIfNecessary } from '../actions/fetchDivs'
+import NotFoundPage from './NotFoundPage'
 
 const store = configureStore();
 
-const fetchTeams = (year, div) => {
-  store.dispatch(fetchDivsIfNecessary(year));
-  store.dispatch(fetchTeamsIfNecessary(year,div));
+const doOrDie = (f) => (state, replace) => {
+  try {
+    f(state);
+  } catch (error) {
+    replace({pathname:'/404'});
+  }
 }
 
-const fetchGames = (year,div,id) => {
+const fetchTeams = doOrDie(({params}) => {
+  let year = params.year;
+  let div = params.div;
+
+  store.dispatch(fetchDivsIfNecessary(year));
+  store.dispatch(fetchTeamsIfNecessary(year,div));
+});
+
+const fetchGames = doOrDie(({params}) => {
+  let year = params.year;
+  let div = params.div;
+  let id = params.teamId;
+
   store.dispatch(fetchTeamsIfNecessary(year,div));
   store.dispatch(fetchGamesByTeamId(year,div,id));
-}
+});
 
-const fetchDivs = (year) => {
+const fetchDivs = doOrDie(({params}) => {
+  let year = params.year;
+
   store.dispatch(fetchDivsIfNecessary(year));
-}
+});
 
 const Root = () => {
   return (
@@ -34,11 +52,13 @@ const Root = () => {
       <Router history={browserHistory}>
         <Route path="/" component={App} >
           <IndexRedirect to="2017" />
-          <Route path="/:year" onEnter={(nextState) => fetchDivs(nextState.params.year)} >
+
+            <Route path="404" component={ NotFoundPage } />
+          <Route path=":year" onEnter={fetchDivs} >
             <IndexRedirect to="divs/1" />
 
-            <Route path="divs/:div" component={Teams} onEnter={(nextState)=>fetchTeams(nextState.params.year, nextState.params.div)}/>
-            <Route path="divs/:div/teams/:teamId" component={Team} onEnter={(nextState)=>fetchGames(nextState.params.year, nextState.params.div, nextState.params.teamId)}/>
+            <Route path="divs/:div" component={Teams} onEnter={fetchTeams}/>
+            <Route path="divs/:div/teams/:teamId" component={Team} onEnter={fetchGames}/>
           </Route>
         </Route>
       </Router>

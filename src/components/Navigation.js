@@ -2,30 +2,7 @@ import React from 'react'
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux'
-
-// const divs = [
-//   {
-//     'id': '1',
-//     'name': 'NCAA Div 1'
-//   },
-//   {
-//     'id': '2',
-//     'name': 'NCAA Div 2'
-//   },
-//   {
-//     'id': '3',
-//     'name': 'NCAA Div 3'
-//   }
-// ];
-
-const YEARS = [
-  {
-    id: '2017'
-  },
-  {
-    id: '2016'
-  }
-];
+import YEARS from '../services/years'
 
 const YearMenuItem = ({currentDiv, toYear, onSelect}) => (
   <LinkContainer to={`/${toYear}/divs/${currentDiv}`} onSelect={onSelect}><MenuItem>{toYear}</MenuItem></LinkContainer>
