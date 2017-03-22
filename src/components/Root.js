@@ -12,6 +12,7 @@ import { fetchTeamsIfNecessary } from '../actions/fetchTeams'
 import fetchGamesByTeamId from '../actions/fetchGames'
 import { fetchDivsIfNecessary } from '../actions/fetchDivs'
 import NotFoundPage from './NotFoundPage'
+import InternalErrorPage from './InternalErrorPage'
 
 const store = configureStore();
 
@@ -19,7 +20,11 @@ const doOrDie = (f) => (state, replace) => {
   try {
     f(state);
   } catch (error) {
-    replace({pathname:'/404'});
+    if (error.statusCode === 404) {
+      replace({pathname:'/404'});
+    } else {
+      replace({pathname:'/500'});
+    }
   }
 }
 
@@ -53,7 +58,8 @@ const Root = () => {
         <Route path="/" component={App} >
           <IndexRedirect to="2017" />
 
-            <Route path="404" component={ NotFoundPage } />
+          <Route path="404" component={ NotFoundPage } />
+          <Route path="500" component={ InternalErrorPage } />
           <Route path=":year" onEnter={fetchDivs} >
             <IndexRedirect to="divs/1" />
 
