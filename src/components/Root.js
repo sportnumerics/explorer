@@ -65,6 +65,8 @@ const Root = () => {
 
             <Route path="divs/:div" component={Teams} onEnter={fetchTeams}/>
             <Route path="divs/:div/teams/:teamId" component={Team} onEnter={fetchGames}/>
+
+            <Route path="*" component={ NotFoundPage } />
           </Route>
         </Route>
       </Router>
