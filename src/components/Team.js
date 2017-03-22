@@ -5,13 +5,21 @@ import Loader from './Loader'
 import { gamesKey } from '../actions/fetchGames';
 import { teamsKey } from '../actions/fetchTeams';
 import _ from 'lodash';
-import { PageHeader } from 'react-bootstrap';
+import { PageHeader, Well } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
+
+const GamesListOrEmptyView = ({ schedule, year, div }) => {
+  if (schedule && schedule.length > 0) {
+    return <GameList games={ schedule } year={year} div={div}/>;
+  } else {
+    return <Well>This team has no games (that we know about)</Well>;
+  }
+}
 
 const Team = ({isFetching, error, result, team, year, div}) => (
   <Loader fetching={isFetching} error={error}>
     <PageHeader>{team && team.name} <small>({year})</small></PageHeader>
-    <GameList games={result && result.schedule} year={year} div={div}/>
+    <GamesListOrEmptyView schedule={ result && result.schedule } year={ year } div={ div } />
     <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
   </Loader>
 );
