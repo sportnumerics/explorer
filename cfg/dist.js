@@ -11,8 +11,9 @@ let config = Object.assign({}, baseConfig, {
   cache: false,
   devtool: 'sourcemap',
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production',
+      EXPLORER_API_URL: process.env.EXPLORER_API_URL
     }),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),

@@ -2,9 +2,11 @@
 
 import baseConfig from './base';
 
+const EXPLORER_API_URL = process.env.EXPLORER_API_URL;
+
 let config = {
   appEnv: 'dist',  // feel free to remove the appEnv property here
-  apiUrl: 'https://fcbbar7gk0.execute-api.ap-southeast-2.amazonaws.com/dev'
+  apiUrl: EXPLORER_API_URL
 };
 
 export default Object.freeze(Object.assign({}, baseConfig, config));

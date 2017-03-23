@@ -6,15 +6,24 @@ set -e
 source ./env/env.sh
 unset AWS_SESSION_TOKEN
 
+if [ "$LAMBCI_BRANCH" = "master" ]; then
+  STAGE=prod
+else
+  STAGE=dev
+fi
+
 REGION="ap-southeast-2"
 APP_NAME="sportnumerics-explorer"
-STAGE=${STAGE:-dev}
 STACK_NAME="$APP_NAME-$STAGE"
 BUCKET_NAME="$APP_NAME-$STAGE"
 CHANGE_SET_NAME="check-changeset"
 TEMPLATE_FILE="cloudformation.yml"
 
 aws configure set region $REGION
+
+export EXPLORER_API_URL=$(aws cloudformation describe-stacks --stack-name sportnumerics-explorer-api-$STAGE --query 'Stacks[0].Outputs[?OutputKey==`ServiceEndpoint`].OutputValue' --output text)
+
+npm run dist
 
 aws cloudformation deploy --stack-name $STACK_NAME --parameter-overrides "StageParameter=$STAGE" --template-file $TEMPLATE_FILE || true
 

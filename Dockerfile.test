@@ -16,4 +16,4 @@ RUN npm install
 
 ADD . .
 
-CMD npm run dist && ./deploy.sh
+CMD ./deploy.sh
