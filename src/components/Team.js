@@ -30,16 +30,14 @@ const mapStateToProps = (state, ownProps) => {
   const teamId = ownProps.params.teamId;
 
   const asyncGames = state.gamesByTeamId[gamesKey(year, teamId)] || {
-    isFetching: true,
-    result: {}
+    isFetching: true
   };
 
   const asyncTeams = state.teamsByDiv[teamsKey(year, div)] || {
-    isFetching: true,
-    result: {}
+    isFetching: true
   };
 
-  const team = _.find(asyncTeams.result.teams, { id: parseInt(teamId) });
+  const team = asyncTeams.result ? _.find(asyncTeams.result.teams, { id: parseInt(teamId) }) : undefined;
 
   return {
     isFetching: asyncGames.isFetching || asyncTeams.isFetching,
