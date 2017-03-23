@@ -15,6 +15,9 @@ let config = Object.assign({}, baseConfig, {
   cache: true,
   devtool: 'eval',
   plugins: [
+    new webpack.EnvironmentPlugin({
+      STAGE: 'dev'
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],

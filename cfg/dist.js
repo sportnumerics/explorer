@@ -13,7 +13,8 @@ let config = Object.assign({}, baseConfig, {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
-      EXPLORER_API_URL: process.env.EXPLORER_API_URL
+      EXPLORER_API_URL: process.env.EXPLORER_API_URL,
+      STAGE: process.env.STAGE
     }),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
