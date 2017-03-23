@@ -27,7 +27,7 @@ npm run dist
 
 aws cloudformation deploy --stack-name $STACK_NAME --parameter-overrides "StageParameter=$STAGE" --template-file $TEMPLATE_FILE || true
 
-CLOUDFRONT_ID=$(aws cloudformation describe-stacks --stack-name sportnumerics-explorer-dev --query 'Stacks[0].Outputs[?OutputKey==`CloudfrontArn`].OutputValue' --output text)
+CLOUDFRONT_ID=$(aws cloudformation describe-stacks --stack-name sportnumerics-explorer-$STAGE --query 'Stacks[0].Outputs[?OutputKey==`CloudfrontArn`].OutputValue' --output text)
 
 aws s3 sync dist "s3://$BUCKET_NAME" --delete
 aws configure set preview.cloudfront true
