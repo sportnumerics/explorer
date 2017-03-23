@@ -11,9 +11,13 @@ Parameters:
 Mappings:
   StageToAliasMap:
     dev:
-      alias: dev.sportnumerics.com
+      aliases:
+      - dev.sportnumerics.com
     prod:
-      alias: prod.sportnumerics.com
+      aliases:
+      - sportnumerics.com
+      - www.sportnumerics.com
+      - prod.sportnumerics.com
 Resources:
   DeploymentBucket:
     Type: AWS::S3::Bucket
@@ -31,10 +35,10 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - Fn::FindInMap:
-            - StageToAliasMap
-            - Ref: StageParameter
-            - alias
+          Fn::FindInMap:
+          - StageToAliasMap
+          - Ref: StageParameter
+          - aliases
         CustomErrorResponses:
         - ErrorCode: 404
           ResponseCode: 200
