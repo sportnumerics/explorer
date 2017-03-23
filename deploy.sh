@@ -7,9 +7,9 @@ source ./env/env.sh
 unset AWS_SESSION_TOKEN
 
 if [ "$LAMBCI_BRANCH" = "master" ]; then
-  STAGE=prod
+  export STAGE=prod
 else
-  STAGE=dev
+  export STAGE=dev
 fi
 
 REGION="ap-southeast-2"
