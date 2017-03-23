@@ -59,7 +59,7 @@ Resources:
           S3OriginConfig: {}
         PriceClass: PriceClass_All
         ViewerCertificate:
-          AcmCertificateArn: arn:aws:acm:us-east-1:265978616089:certificate/5185a1b4-e9c5-4c45-86d6-5aefa73c66c8
+          AcmCertificateArn: arn:aws:acm:us-east-1:265978616089:certificate/198f3e8e-17ff-4da7-bca3-d5f42f473ee7
           SslSupportMethod: sni-only
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
