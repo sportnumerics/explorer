@@ -46,6 +46,7 @@ Resources:
             QueryString: false
           TargetOriginId: DefaultOrigin
           ViewerProtocolPolicy: redirect-to-https
+          Compress: true
         DefaultRootObject: index.html
         Enabled: true
         Origins:
