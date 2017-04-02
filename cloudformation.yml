@@ -9,15 +9,17 @@ Parameters:
     - prod
     Description: Stage to deploy
 Mappings:
-  StageToAliasMap:
+  StageMapping:
     dev:
       aliases:
       - dev.sportnumerics.com
+      certificate: arn:aws:acm:us-east-1:265978616089:certificate/8a8d8c31-20b3-49c4-8b58-13b259064cc6
     prod:
       aliases:
       - sportnumerics.com
       - www.sportnumerics.com
       - prod.sportnumerics.com
+      certificate: arn:aws:acm:us-east-1:265978616089:certificate/7140c26c-5b35-4f21-b16d-695bf5a659e6
 Resources:
   DeploymentBucket:
     Type: AWS::S3::Bucket
@@ -34,7 +36,7 @@ Resources:
       DistributionConfig:
         Aliases:
           Fn::FindInMap:
-          - StageToAliasMap
+          - StageMapping
           - Ref: StageParameter
           - aliases
         CustomErrorResponses:
@@ -62,7 +64,11 @@ Resources:
           S3OriginConfig: {}
         PriceClass: PriceClass_All
         ViewerCertificate:
-          AcmCertificateArn: arn:aws:acm:us-east-1:265978616089:certificate/198f3e8e-17ff-4da7-bca3-d5f42f473ee7
+          AcmCertificateArn:
+            Fn::FindInMap:
+              - StageMapping
+              - Ref: StageParameter
+              - certificate
           SslSupportMethod: sni-only
   BucketPolicy:
     Type: AWS::S3::BucketPolicy

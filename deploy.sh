@@ -8,8 +8,10 @@ unset AWS_SESSION_TOKEN
 
 if [ "$LAMBCI_BRANCH" = "master" ]; then
   export STAGE=prod
+  EXPLORER_API_PREFIX="explorer-api"
 else
   export STAGE=dev
+  EXPLORER_API_PREFIX="explorer-api.dev"
 fi
 
 REGION="ap-southeast-2"
@@ -21,7 +23,7 @@ TEMPLATE_FILE="cloudformation.yml"
 
 aws configure set region $REGION
 
-export EXPLORER_API_URL=$(aws cloudformation describe-stacks --stack-name sportnumerics-explorer-api-$STAGE --query 'Stacks[0].Outputs[?OutputKey==`ServiceEndpoint`].OutputValue' --output text)
+export EXPLORER_API_URL="$EXPLORER_API_PREFIX.sportnumerics.com"
 
 npm run dist
 
