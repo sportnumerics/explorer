@@ -23,7 +23,7 @@ TEMPLATE_FILE="cloudformation.yml"
 
 aws configure set region $REGION
 
-export EXPLORER_API_URL="$EXPLORER_API_PREFIX.sportnumerics.com"
+export EXPLORER_API_URL="https://$EXPLORER_API_PREFIX.sportnumerics.com"
 
 npm run dist
 
