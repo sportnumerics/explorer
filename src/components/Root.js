@@ -4,7 +4,7 @@ import 'styles/App.scss'
 import React from 'react'
 import { Provider } from 'react-redux'
 import configureStore from '../configureStore'
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, browserHistory, IndexRoute } from 'react-router'
 import App from './App'
 import Teams from './Teams'
 import Team from './Team'
@@ -13,6 +13,8 @@ import fetchGamesByTeamId from '../actions/fetchGames'
 import { fetchDivsIfNecessary } from '../actions/fetchDivs'
 import NotFoundPage from './NotFoundPage'
 import InternalErrorPage from './InternalErrorPage'
+import Landing from './Landing'
+import { DEFAULT_YEAR } from '../services/years'
 
 const store = configureStore();
 
@@ -46,25 +48,25 @@ const fetchGames = doOrDie(({params}) => {
 });
 
 const fetchDivs = doOrDie(({params}) => {
-  let year = params.year;
+  let year = params.year || DEFAULT_YEAR;
 
   store.dispatch(fetchDivsIfNecessary(year));
 });
 
 const Root = () => {
   return (
-    <Provider store={store}>
-      <Router history={browserHistory}>
-        <Route path="/" component={App} >
-          <IndexRedirect to="2017" />
+    <Provider store={ store }>
+      <Router history={ browserHistory }>
+        <Route path="/" component={ App } onEnter={ fetchDivs }>
+          <IndexRoute component={ Landing } />
 
           <Route path="404" component={ NotFoundPage } />
           <Route path="500" component={ InternalErrorPage } />
-          <Route path=":year" onEnter={fetchDivs} >
+          <Route path=":year" onEnter={ fetchDivs } >
             <IndexRedirect to="divs/1" />
 
-            <Route path="divs/:div" component={Teams} onEnter={fetchTeams}/>
-            <Route path="divs/:div/teams/:teamId" component={Team} onEnter={fetchGames}/>
+            <Route path="divs/:div" component={ Teams } onEnter={ fetchTeams }/>
+            <Route path="divs/:div/teams/:teamId" component={ Team } onEnter={ fetchGames }/>
 
             <Route path="*" component={ NotFoundPage } />
           </Route>

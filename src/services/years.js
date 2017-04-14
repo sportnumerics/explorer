@@ -7,4 +7,6 @@ const YEARS = [
   }
 ];
 
+export const DEFAULT_YEAR = 2017
+
 export default YEARS

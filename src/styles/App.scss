@@ -1,8 +1,5 @@
 /* Base Application Styles */
-
-$primary-color: #A93838;
-$secondary-color: #2C4670;
-$tertiary-color: #A0A737;
+@import "Colors";
 
 html {
   position: relative;
@@ -40,6 +37,10 @@ $footer-height: 60px;
 
 body {
   margin-bottom: $footer-height + 20px;
+}
+
+.main-logo-container {
+  margin-bottom: 30px;
 }
 
 .last-modified-date {

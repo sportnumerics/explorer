@@ -1,13 +1,17 @@
 import React from 'react'
 import Navigation from './Navigation'
-import { Grid, Row, Col } from 'react-bootstrap'
 
 const App = ({children, params}) => {
   return (
-    <Grid>
-      <Row><Navigation params={params} /></Row>
-      <Row><Col md={6} mdOffset={3} xs={12}>{children}</Col></Row>
-    </Grid>
+    <div>
+      <Navigation params={params} />
+      {children}
+      <div className="footer">
+        <div className="container">
+          <p className="align-middle"><a href="https://twitter.com/wiggzz"><i className="fa fa-twitter fa-2x" aria-hidden="true"></i></a></p>
+        </div>
+      </div>
+    </div>
   );
 };
 

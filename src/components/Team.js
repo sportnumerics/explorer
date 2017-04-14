@@ -5,7 +5,7 @@ import Loader from './Loader'
 import { gamesKey } from '../actions/fetchGames';
 import { teamsKey } from '../actions/fetchTeams';
 import _ from 'lodash';
-import { PageHeader, Well } from 'react-bootstrap';
+import { PageHeader, Well, Col, Grid, Row } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
 
 const GamesListOrEmptyView = ({ schedule, year, div }) => {
@@ -17,11 +17,17 @@ const GamesListOrEmptyView = ({ schedule, year, div }) => {
 }
 
 const Team = ({isFetching, error, result, team, year, div}) => (
-  <Loader fetching={isFetching} error={error}>
-    <PageHeader>{team && team.name} <small>({year})</small></PageHeader>
-    <GamesListOrEmptyView schedule={ result && result.schedule } year={ year } div={ div } />
-    <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
-  </Loader>
+  <Grid>
+    <Row>
+      <Col md={6} mdOffset={3} xs={12}>
+        <Loader fetching={isFetching} error={error}>
+          <PageHeader>{team && team.name} <small>({year})</small></PageHeader>
+          <GamesListOrEmptyView schedule={ result && result.schedule } year={ year } div={ div } />
+          <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
+        </Loader>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 const mapStateToProps = (state, ownProps) => {

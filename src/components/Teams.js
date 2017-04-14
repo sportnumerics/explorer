@@ -4,15 +4,19 @@ import TeamList from './TeamList';
 import Loader from './Loader';
 import { teamsKey } from '../actions/fetchTeams';
 import _ from 'lodash';
-import { PageHeader } from 'react-bootstrap';
+import { PageHeader, Col, Grid, Row } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
 
 const Teams = ({isFetching, error, result, sortBy, year, div}) => {
-  return (<Loader fetching={isFetching} error={error}>
-    <PageHeader>{div && div.title} <small>({year})</small></PageHeader>
-    <TeamList teams={result && result.teams} sortBy={sortBy} year={year} div={div.id}/>
-    <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
-  </Loader>)
+  return <Grid><Row>
+    <Col md={6} mdOffset={3} xs={12}>
+      <Loader fetching={isFetching} error={error}>
+        <PageHeader>{div && div.title} <small>({year})</small></PageHeader>
+        <TeamList teams={result && result.teams} sortBy={sortBy} year={year} div={div.id}/>
+        <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
+      </Loader>
+    </Col>
+  </Row></Grid>
 };
 
 const mapStateToProps = (state, ownProps) => {
