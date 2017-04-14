@@ -33,4 +33,4 @@ CLOUDFRONT_ID=$(aws cloudformation describe-stacks --stack-name sportnumerics-ex
 
 aws s3 sync dist "s3://$BUCKET_NAME" --delete
 aws configure set preview.cloudfront true
-aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths / /assets/app.js /assets/app.js.map /logo-196.png /favicon.ico
+aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths / /logo-196.png /logo-180.png /favicon.ico
