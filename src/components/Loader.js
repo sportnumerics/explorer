@@ -1,6 +1,5 @@
 import React from 'react'
 import ErrorPage from './ErrorPage'
-import 'font-awesome/css/font-awesome.css'
 
 const Loader = ({fetching, error, children}) => {
   if (fetching) {

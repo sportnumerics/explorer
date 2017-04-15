@@ -33,6 +33,9 @@ $navbar-inverse-link-color: lighten(#000, 80%);
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome.scss";
+
 $footer-height: 60px;
 
 body {
