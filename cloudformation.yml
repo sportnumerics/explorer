@@ -22,7 +22,7 @@ Mappings:
 Conditions:
   CreateStagingDistribution:
     Fn::Not:
-      Fn::Equals:
+      - Fn::Equals:
         - Ref: StageParameter
         - dev
 Resources:
