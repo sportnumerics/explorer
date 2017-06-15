@@ -7,12 +7,12 @@ source ./env/env.sh
 unset AWS_SESSION_TOKEN
 
 if [ "$LAMBCI_BRANCH" = "master" ]; then
-  STACK_PREFIX="sportnumerics-explorer"
-  STAGE="prodgreen"
-  EXPLORER_API_PREFIX="explorer-api-green"
-  if aws cloudformation describe-stacks --stack-name "$STACK_PREFIX-$STAGE"; then
+  CDN_STACK_NAME="sportnumerics-explorer-cdn-prod"
+  ACTIVE_DEPLOYMENT=$(aws cloudformation describe-stacks --stack-name $CDN_STACK_NAME --query 'Stacks[0].Outputs[?OutputKey==`ExplorerStageDeployment`].OutputValue' --output text)
+  if [ "$ACTIVE_DEPLOYMENT" = "prodgreen" ]; then
     STAGE="prodblue"
-    EXPLORER_API_PREFIX="explorer-api-blue"
+  else
+    STAGE="prodgreen"
   fi
 else
   STAGE=dev
