@@ -16,7 +16,7 @@ let config = Object.assign({}, baseConfig, {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
       EXPLORER_API_URL: process.env.EXPLORER_API_URL,
-      STAGE: process.env.STAGE
+      STAGE: process.env.APP_STAGE
     }),
     new webpack.optimize.UglifyJsPlugin({
       output: {

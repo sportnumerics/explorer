@@ -17,8 +17,10 @@ if [ "$LAMBCI_BRANCH" = "master" ]; then
     STAGE="prodgreen"
     EXPLORER_API_PREFIX="explorer-api-green"
   fi
+  export APP_STAGE=prod
 else
   STAGE=dev
+  export APP_STAGE=dev
   EXPLORER_API_PREFIX="explorer-api.dev"
 fi
 
