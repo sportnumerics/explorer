@@ -20,7 +20,6 @@ REGION="ap-southeast-2"
 APP_NAME="sportnumerics-explorer"
 STACK_NAME="$APP_NAME-$STAGE"
 BUCKET_NAME="$APP_NAME-$STAGE"
-CHANGE_SET_NAME="check-changeset"
 TEMPLATE_FILE="cloudformation.yml"
 
 aws configure set region $REGION
