@@ -5,7 +5,7 @@ import { validateResponse } from './utils';
 export const DEFAULT_DIV = 1;
 
 export default function teams(year) {
-  let url = `${config.apiUrl}/years/${year}/divs`;
+  let url = `${config.apiUrl}/years/${year}`;
 
   return fetch(url)
     .then(validateResponse)

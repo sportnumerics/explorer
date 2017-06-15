@@ -3,7 +3,7 @@ import config from 'config';
 import { validateResponse, addMetadata } from './utils';
 
 export default function teams(year, div) {
-  let url = `${config.apiUrl}/years/${year}/divs/${div}/teams`;
+  let url = `${config.apiUrl}/years/${year}/divs/${div}`;
 
   return fetch(url)
     .then(validateResponse)

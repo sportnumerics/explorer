@@ -40,11 +40,9 @@ const fetchTeams = doOrDie(({params}) => {
 
 const fetchGames = doOrDie(({params}) => {
   let year = params.year;
-  let div = params.div;
   let id = params.teamId;
 
-  store.dispatch(fetchTeamsIfNecessary(year,div));
-  store.dispatch(fetchGamesByTeamId(year,div,id));
+  store.dispatch(fetchGamesByTeamId(year,id));
 });
 
 const fetchDivs = doOrDie(({params}) => {
@@ -66,7 +64,7 @@ const Root = () => {
             <IndexRedirect to="divs/1" />
 
             <Route path="divs/:div" component={ Teams } onEnter={ fetchTeams }/>
-            <Route path="divs/:div/teams/:teamId" component={ Team } onEnter={ fetchGames }/>
+            <Route path="teams/:teamId" component={ Team } onEnter={ fetchGames }/>
 
             <Route path="*" component={ NotFoundPage } />
           </Route>

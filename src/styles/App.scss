@@ -64,3 +64,15 @@ body {
     color: $gray-light;
   }
 }
+
+.positive-error {
+  color: green;
+}
+
+.negative-error {
+  color: red;
+}
+
+.unimportant {
+  color: lightgrey;
+}

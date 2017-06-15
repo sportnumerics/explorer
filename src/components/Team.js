@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import GameList from './GameList'
 import Loader from './Loader'
 import { gamesKey } from '../actions/fetchGames';
-import { teamsKey } from '../actions/fetchTeams';
-import _ from 'lodash';
 import { PageHeader, Well, Col, Grid, Row } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
 
@@ -16,14 +14,14 @@ const GamesListOrEmptyView = ({ schedule, year, div }) => {
   }
 }
 
-const Team = ({isFetching, error, result, team, year, div}) => (
+const Team = ({isFetching, error, team}) => (
   <Grid>
     <Row>
       <Col md={6} mdOffset={3} xs={12}>
         <Loader fetching={isFetching} error={error}>
-          <PageHeader>{team && team.name} <small>({year})</small></PageHeader>
-          <GamesListOrEmptyView schedule={ result && result.schedule } year={ year } div={ div } />
-          <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
+          <PageHeader>{ team && team.name } <small>({ team && team.season})</small></PageHeader>
+          <GamesListOrEmptyView schedule={ team && team.schedule } year={ team && team.season } div={ team && team.div } />
+          <LastModifiedDate iso8601dateString={ team && team.meta.lastModified } />
         </Loader>
       </Col>
     </Row>
@@ -32,26 +30,16 @@ const Team = ({isFetching, error, result, team, year, div}) => (
 
 const mapStateToProps = (state, ownProps) => {
   const year = ownProps.params.year;
-  const div = ownProps.params.div;
   const teamId = ownProps.params.teamId;
 
-  const asyncGames = state.gamesByTeamId[gamesKey(year, teamId)] || {
+  const asyncTeam = state.gamesByTeamId[gamesKey(year, teamId)] || {
     isFetching: true
   };
-
-  const asyncTeams = state.teamsByDiv[teamsKey(year, div)] || {
-    isFetching: true
-  };
-
-  const team = asyncTeams.result ? _.find(asyncTeams.result.teams, { id: parseInt(teamId) }) : undefined;
 
   return {
-    isFetching: asyncGames.isFetching || asyncTeams.isFetching,
-    error: asyncGames.error || asyncTeams.error,
-    result: asyncGames.result,
-    team,
-    year,
-    div
+    isFetching: asyncTeam.isFetching,
+    error: asyncTeam.error,
+    team: asyncTeam.result
   };
 };
 
