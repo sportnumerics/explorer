@@ -33,3 +33,5 @@ npm run dist
 aws cloudformation deploy --stack-name $STACK_NAME --parameter-overrides "StageParameter=$STAGE" --template-file $TEMPLATE_FILE || true
 
 aws s3 sync dist "s3://$BUCKET_NAME" --delete
+
+echo "Deployment completed to https://sportnumerics-explorer-$STAGE.s3.amazonaws.com"
