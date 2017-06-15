@@ -9,10 +9,11 @@ unset AWS_SESSION_TOKEN
 if [ "$LAMBCI_BRANCH" = "master" ]; then
   STACK_PREFIX="sportnumerics-explorer"
   STAGE="prodgreen"
+  EXPLORER_API_PREFIX="explorer-api-green"
   if aws cloudformation describe-stacks --stack-name "$STACK_PREFIX-$STAGE"; then
     STAGE="prodblue"
+    EXPLORER_API_PREFIX="explorer-api-blue"
   fi
-  EXPLORER_API_PREFIX="explorer-api-$STAGE"
 else
   STAGE=dev
   EXPLORER_API_PREFIX="explorer-api.dev"
