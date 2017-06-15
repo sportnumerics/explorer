@@ -8,6 +8,13 @@ Parameters:
     - dev
     - prod
     Description: Stage to deploy
+  ExplorerApiStage:
+    Type: String
+    AllowedValues:
+    - green
+    - blue
+    - dev
+   Description: The stage of explorer API that this stack is pointing to.
 Mappings:
   StageMapping:
     dev:
@@ -91,3 +98,7 @@ Outputs:
     Description: Cloudfront distribution for sportnumerics frontend
     Value:
       Ref: CloudfrontDistribution
+  ExplorerApiStage:
+    Description: The stage of the explorer API that this stack is pointing at
+    Value:
+      Ref: ExplorerApiStage
