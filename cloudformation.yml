@@ -37,7 +37,7 @@ Resources:
           - Ref: StageParameter
   StagingCloudfrontDistribution:
     Type: AWS::CloudFront::Distribution
-    Condition: CreateStagingDistributions
+    Condition: CreateStagingDistribution
     Properties:
       DistributionConfig:
         Aliases:
