@@ -69,11 +69,7 @@ Resources:
                 - "-"
                 - - sportnumerics-explorer
                   - Ref: StageParameter
-              - Fn::Join:
-                - "-"
-                - - s3
-                  - Ref: AWS::Region
-              - amazonaws.com
+              - s3.amazonaws.com
           Id: DefaultOrigin
           S3OriginConfig: {}
         PriceClass: PriceClass_All
