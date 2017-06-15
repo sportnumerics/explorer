@@ -11,8 +11,10 @@ if [ "$LAMBCI_BRANCH" = "master" ]; then
   ACTIVE_DEPLOYMENT=$(aws cloudformation describe-stacks --stack-name $CDN_STACK_NAME --query 'Stacks[0].Outputs[?OutputKey==`ExplorerStageDeployment`].OutputValue' --output text)
   if [ "$ACTIVE_DEPLOYMENT" = "prodgreen" ]; then
     STAGE="prodblue"
+    EXPLORER_API_PREFIX="explorer-api-blue"
   else
     STAGE="prodgreen"
+    EXPLORER_API_PREFIX="explorer-api-green"
   fi
 else
   STAGE=dev
