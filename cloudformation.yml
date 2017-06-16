@@ -81,7 +81,7 @@ Resources:
       AliasTarget:
         DNSName:
           Fn::GetAtt:
-            - CloudfrontDistribution
+            - StagingCloudfrontDistribution
             - DomainName
         HostedZoneId: Z2FDTNDATAQYW2
       HostedZoneName: sportnumerics.com.
