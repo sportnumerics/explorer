@@ -112,6 +112,6 @@ Outputs:
     Description: Staging cloudfront distribution for sportnumerics frontend
     Value:
       Fn::If:
-        - CreateStagingDistribution
+        - ProdCondition
         - Ref: StagingCloudfrontDistribution
         - "DistributionNotCreated"
