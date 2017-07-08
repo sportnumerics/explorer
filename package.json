@@ -13,9 +13,9 @@
     "release:major": "npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
     "release:patch": "npm version patch && npm publish && git push --follow-tags",
-    "serve": "webpack-dev-server --env=dev --hot",
-    "serve:dist": "webpack-dev-server --env=dist --hot",
-    "start": "webpack-dev-server --env=dev --hot",
+    "serve": "webpack-dev-server --env=dev",
+    "serve:dist": "webpack-dev-server --env=dist",
+    "start": "webpack-dev-server --env=dev",
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },

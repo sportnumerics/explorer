@@ -9,11 +9,7 @@ let HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 
 
 let config = Object.assign({}, baseConfig, {
-  entry: [
-    'webpack-dev-server/client?http://127.0.0.1:' + defaultSettings.port,
-    'webpack/hot/only-dev-server',
-    './src/index'
-  ],
+  entry: './src/index',
   cache: true,
   devtool: 'eval',
   plugins: [
@@ -26,8 +22,7 @@ let config = Object.assign({}, baseConfig, {
       filename: 'index.html',
       template: path.join(__dirname, '../src/index.html'),
       inlineSource: '.(js)$'
-    }),
-    new HtmlWebpackInlineSourcePlugin()
+    })
   ],
   module: defaultSettings.getDefaultModules()
 });
