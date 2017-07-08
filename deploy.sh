@@ -41,7 +41,10 @@ aws s3 sync dist "s3://$BUCKET_NAME" --delete
 
 if [ "$STAGE" != "dev" ]; then
   CLOUDFRONT_ID=$(aws cloudformation describe-stacks --stack-name sportnumerics-explorer-$STAGE --query 'Stacks[0].Outputs[?OutputKey==`CloudfrontArn`].OutputValue' --output text)
-  aws configure set preview.cloudfront true
-  aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths / /logo-196.png /logo-180.png /favicon.ico
+else
+  CLOUDFRONT_ID=$(aws cloudformation describe-stacks --stack-name sportnumerics-explorer-cdn-$STAGE --query 'Stacks[0].Outputs[?OutputKey==`CloudfrontArn`].OutputValue' --output text)
 fi
+
+aws configure set preview.cloudfront true
+aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths / /logo-196.png /logo-180.png /favicon.ico
 
