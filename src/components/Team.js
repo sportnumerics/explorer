@@ -19,8 +19,8 @@ const Team = ({isFetching, error, team}) => (
     <Row>
       <Col md={6} mdOffset={3} xs={12}>
         <Loader fetching={isFetching} error={error}>
-          <PageHeader>{ team && team.name } <small>({ team && team.season})</small></PageHeader>
-          <GamesListOrEmptyView schedule={ team && team.schedule } year={ team && team.season } div={ team && team.div } />
+          <PageHeader>{ team && team.name } <small>({ team && team.year})</small></PageHeader>
+          <GamesListOrEmptyView schedule={ team && team.schedule } year={ team && team.year } div={ team && team.div } />
           <LastModifiedDate iso8601dateString={ team && team.meta.lastModified } />
         </Loader>
       </Col>
