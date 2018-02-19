@@ -8,7 +8,8 @@ unset AWS_SESSION_TOKEN
 
 if [ "$LAMBCI_BRANCH" = "master" ]; then
   CDN_STACK_NAME="sportnumerics-explorer-cdn-prod"
-  ACTIVE_DEPLOYMENT=$(aws cloudformation describe-stacks --stack-name $CDN_STACK_NAME --query 'Stacks[0].Outputs[?OutputKey==`ExplorerStageDeployment`].OutputValue' --output text)
+  CDN_STACK_REGION="ap-southeast-2"
+  ACTIVE_DEPLOYMENT=$(aws --region $CDN_STACK_REGION cloudformation describe-stacks --stack-name $CDN_STACK_NAME --query 'Stacks[0].Outputs[?OutputKey==`ExplorerStageDeployment`].OutputValue' --output text)
   if [ "$ACTIVE_DEPLOYMENT" = "prodgreen" ]; then
     STAGE="prodblue"
     EXPLORER_API_PREFIX="explorer-api-blue"
@@ -23,13 +24,12 @@ else
   EXPLORER_API_PREFIX="explorer-api.dev"
 fi
 
-REGION="ap-southeast-2"
 APP_NAME="sportnumerics-explorer"
 STACK_NAME="$APP_NAME-$STAGE"
 BUCKET_NAME="$APP_NAME-$STAGE"
 TEMPLATE_FILE="cloudformation.yml"
 
-aws configure set region $REGION
+aws configure set region $AWS_DEFAULT_REGION
 
 export EXPLORER_API_URL="https://$EXPLORER_API_PREFIX.sportnumerics.com"
 
