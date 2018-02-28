@@ -1,8 +1,6 @@
-FROM alpine:3.4
+FROM node:alpine
 
 WORKDIR /work
-
-RUN apk add --no-cache bash curl git docker py-pip openssl nodejs build-base
 
 RUN pip install --upgrade pip
 
@@ -10,9 +8,7 @@ RUN pip install --upgrade awscli
 
 ADD package.json ./
 
-RUN npm install node-sass
-
-RUN npm install
+RUN yarn
 
 ADD . .
 
