@@ -7,7 +7,6 @@ source ./env/env.sh
 unset AWS_SESSION_TOKEN
 
 if [ "$LAMBCI_BRANCH" = "master" ]; then
-  CDN_STACK_NAME="sportnumerics-explorer-cdn-prod"
   ACTIVE_DEPLOYMENT=$(./node_modules/.bin/explorer-cdn describe-active-stage)
   if [ "$ACTIVE_DEPLOYMENT" = "prodgreen" ]; then
     STAGE="prodblue"
