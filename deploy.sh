@@ -6,19 +6,27 @@ set -e
 source ./env/env.sh
 unset AWS_SESSION_TOKEN
 
-if [ "$LAMBCI_BRANCH" = "master" ]; then
-  ACTIVE_DEPLOYMENT=$(./node_modules/.bin/explorer-cdn describe-active-stage)
-  if [ "$ACTIVE_DEPLOYMENT" = "prodgreen" ]; then
-    STAGE="prodblue"
-    EXPLORER_API_PREFIX="explorer-api-blue"
+ACTIVE_PROD_DEPLOYMENT=$(./node_modules/.bin/explorer-cdn describe-active-stage)
+
+if [[ "$LAMBCI_BRANCH" = "master" ]]; then
+  if [[ "$ACTIVE_PROD_DEPLOYMENT" = "prodgreen" ]]; then
+    THIS_DEPLOYMENT="blue"
   else
-    STAGE="prodgreen"
-    EXPLORER_API_PREFIX="explorer-api-green"
+    THIS_DEPLOYMENT="green"
   fi
   export APP_STAGE=prod
+elif [[ "$LAMBCI_BRANCH" =~ ^hotfix ]]; then
+  THIS_DEPLOYMENT=${ACTIVE_PROD_DEPLOYMENT#prod}
+  export APP_STAGE=prod
+else
+  export APP_STAGE=dev
+fi
+
+if [[ "$APP_STAGE" = "prod" ]]; then
+  STAGE="prod$THIS_DEPLOYMENT"
+  EXPLORER_API_PREFIX="explorer-api-$THIS_DEPLOYMENT"
 else
   STAGE=dev
-  export APP_STAGE=dev
   EXPLORER_API_PREFIX="explorer-api.dev"
 fi
 
