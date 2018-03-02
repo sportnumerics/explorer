@@ -19,7 +19,14 @@ class Team extends React.Component {
   constructor(props) {
     super(props)
     const { year, teamId, dispatch } = props;
-    dispatch(fetchGamesByTeamId(year, teamId));
+
+    props.fetchGamesByTeamId(year, teamId)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.year !== this.props.year || nextProps.teamId !== this.props.teamId) {
+      this.props.fetchGamesByTeamId(nextProps.year, nextProps.teamId);
+    }
   }
 
   render() {
@@ -56,7 +63,9 @@ const mapStateToProps = (state, {match}) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { dispatch };
+  return { 
+    fetchGamesByTeamId: (year, teamId) => dispatch(fetchGamesByTeamId(year, teamId))
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);
