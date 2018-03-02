@@ -11,12 +11,11 @@ let HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 let config = Object.assign({}, baseConfig, {
   entry: './src/index',
   cache: true,
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   plugins: [
     new webpack.EnvironmentPlugin({
       STAGE: 'dev'
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -25,13 +24,6 @@ let config = Object.assign({}, baseConfig, {
     })
   ],
   module: defaultSettings.getDefaultModules()
-});
-
-// Add needed loaders to the defaults here
-config.module.rules.push({
-  test: /\.(js|jsx)$/,
-  loader: 'react-hot-loader!babel-loader',
-  include: [ path.join(__dirname, '/../src') ]
 });
 
 module.exports = config;

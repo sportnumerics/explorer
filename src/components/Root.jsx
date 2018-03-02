@@ -4,8 +4,10 @@ import 'styles/App.scss'
 import React from 'react'
 import { Provider } from 'react-redux'
 import configureStore from '../configureStore'
-import { Router, Route, IndexRedirect, browserHistory, IndexRoute } from 'react-router'
-import App from './App'
+import { Router, Route, Switch } from 'react-router-dom'
+import history from '../services/history'
+import Navigation from './Navigation';
+import Footer from './Footer'
 import Teams from './Teams'
 import Team from './Team'
 import { fetchTeamsIfNecessary } from '../actions/fetchTeams'
@@ -30,23 +32,23 @@ const doOrDie = (f) => (state, replace) => {
   }
 }
 
-const fetchTeams = doOrDie(({params}) => {
-  let year = params.year;
-  let div = params.div;
+const fetchTeams = doOrDie(({match}) => {
+  let year = match.params.year;
+  let div = match.params.div;
 
   store.dispatch(fetchDivsIfNecessary(year));
   store.dispatch(fetchTeamsIfNecessary(year,div));
 });
 
-const fetchGames = doOrDie(({params}) => {
-  let year = params.year;
-  let id = params.teamId;
+const fetchGames = doOrDie(({match}) => {
+  let year = match.params.year;
+  let id = match.params.teamId;
 
   store.dispatch(fetchGamesByTeamId(year,id));
 });
 
-const fetchDivs = doOrDie(({params}) => {
-  let year = params.year || DEFAULT_YEAR;
+const fetchDivs = doOrDie(({match}) => {
+  let year = match.params.year || DEFAULT_YEAR;
 
   store.dispatch(fetchDivsIfNecessary(year));
 });
@@ -54,21 +56,22 @@ const fetchDivs = doOrDie(({params}) => {
 const Root = () => {
   return (
     <Provider store={ store }>
-      <Router history={ browserHistory }>
-        <Route path="/" component={ App } onEnter={ fetchDivs }>
-          <IndexRoute component={ Landing } />
+      <Router history={ history } >
+        <div>
+          <Route component={ Navigation } />
+          <Route onEnter={ fetchDivs } />
+          <Switch>
+            <Route exact path="/" component={ Landing } />
+            <Route path="/:year" onEnter={ fetchDivs } />
+            <Route path="/:year/divs/:div" component={ Teams } onEnter={ fetchTeams } />
+            <Route path="/:year/teams/:teamId" component={ Team } onEnter={ fetchGames } />
 
-          <Route path="404" component={ NotFoundPage } />
-          <Route path="500" component={ InternalErrorPage } />
-          <Route path=":year" onEnter={ fetchDivs } >
-            <IndexRedirect to="divs/1" />
-
-            <Route path="divs/:div" component={ Teams } onEnter={ fetchTeams }/>
-            <Route path="teams/:teamId" component={ Team } onEnter={ fetchGames }/>
-
-            <Route path="*" component={ NotFoundPage } />
-          </Route>
-        </Route>
+            <Route path="404" component={ NotFoundPage } />
+            <Route path="500" component={ InternalErrorPage } />
+            <Route component={ NotFoundPage } />
+          </Switch>
+          <Route component={ Footer } />
+        </div>
       </Router>
     </Provider>
   );

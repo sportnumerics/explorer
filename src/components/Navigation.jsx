@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux'
 import { DEFAULT_DIV } from '../services/divs'
 import YEARS, { DEFAULT_YEAR } from '../services/years'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const YearMenuItem = ({currentDiv, toYear, onSelect}) => (
   <LinkContainer to={`/${toYear}/divs/${currentDiv}`} onSelect={onSelect}><MenuItem>{toYear}</MenuItem></LinkContainer>
@@ -37,8 +37,8 @@ const Navigation = ({params, years, divs}) => {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const params = ownProps.params;
+const mapStateToProps = (state, { match }) => {
+  const params = match.params;
 
   const divs = state.divsByYear[params.year || DEFAULT_YEAR] || {
     isFetching: true

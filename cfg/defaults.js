@@ -42,6 +42,11 @@ function getDefaultModules() {
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
+      },
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        include: [ path.join(__dirname, '/../src') ]
       }
     ]
   };
@@ -51,7 +56,5 @@ module.exports = {
   publicPath: '/',
   port: dfltPort,
   getDefaultModules: getDefaultModules,
-  postcss: function () {
-    return [];
-  }
+  postcss: {}
 };

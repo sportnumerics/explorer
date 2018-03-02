@@ -19,9 +19,9 @@ const Teams = ({isFetching, error, result, sortBy, year, div}) => {
   </Row></Grid>
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const year = ownProps.params.year;
-  const divId = ownProps.params.div;
+const mapStateToProps = (state, { match }) => {
+  const year = match.params.year;
+  const divId = match.params.div;
 
   const asyncTeams = state.teamsByDiv[teamsKey(year, divId)] || {
     isFetching: true

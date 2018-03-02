@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { round } from '../utils/utils'
 import { Table } from 'react-bootstrap'
@@ -19,7 +20,7 @@ const TeamList = ({sortBy, teams, year}) => {
 };
 
 TeamList.defaultProps = {
-  teams: React.PropTypes.object.isRequired
+  teams: PropTypes.object.isRequired
 };
 
 export default TeamList;
