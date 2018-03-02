@@ -1,7 +1,7 @@
 import React from 'react'
 import GameDate from './GameDate'
 import GameResult from './GameResult'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { round } from '../utils/utils'
 import { Table } from 'react-bootstrap'
 

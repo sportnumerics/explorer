@@ -6,18 +6,32 @@ import { teamsKey } from '../actions/fetchTeams';
 import _ from 'lodash';
 import { PageHeader, Col, Grid, Row } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
+import { fetchTeamsIfNecessary } from '../actions/fetchTeams'
+import { fetchDivsIfNecessary } from '../actions/fetchDivs'
 
-const Teams = ({isFetching, error, result, sortBy, year, div}) => {
-  return <Grid><Row>
-    <Col md={6} mdOffset={3} xs={12}>
-      <Loader fetching={isFetching} error={error}>
-        <PageHeader>{div && div.title} <small>({year})</small></PageHeader>
-        <TeamList teams={result && result.teams} sortBy={sortBy} year={year} div={div.id}/>
-        <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
-      </Loader>
-    </Col>
-  </Row></Grid>
-};
+class Teams extends React.Component {
+  constructor(props) {
+    super(props)
+
+    const { year, div, dispatch } = props
+
+    dispatch(fetchDivsIfNecessary(year));
+    dispatch(fetchTeamsIfNecessary(year, div.id));
+  }
+
+  render() {
+    const {isFetching, error, result, sortBy, year, div} = this.props;
+    return <Grid><Row>
+      <Col md={6} mdOffset={3} xs={12}>
+        <Loader fetching={isFetching} error={error}>
+          <PageHeader>{div && div.title} <small>({year})</small></PageHeader>
+          <TeamList teams={result && result.teams} sortBy={sortBy} year={year} div={div.id}/>
+          <LastModifiedDate iso8601dateString={result && result.meta.lastModified} />
+        </Loader>
+      </Col>
+    </Row></Grid>
+  }
+}
 
 const mapStateToProps = (state, { match }) => {
   const year = match.params.year;
@@ -46,4 +60,8 @@ const mapStateToProps = (state, { match }) => {
   };
 };
 
-export default connect(mapStateToProps)(Teams);
+const mapDispatchToProps = (dispatch) => {
+  return { dispatch }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Teams);

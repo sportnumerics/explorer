@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { DEFAULT_DIV } from '../services/divs'
 import YEARS, { DEFAULT_YEAR } from '../services/years'
 import { Link } from 'react-router-dom'
+import { fetchDivsIfNecessary } from '../actions/fetchDivs';
 
 const YearMenuItem = ({currentDiv, toYear, onSelect}) => (
   <LinkContainer to={`/${toYear}/divs/${currentDiv}`} onSelect={onSelect}><MenuItem>{toYear}</MenuItem></LinkContainer>
@@ -14,27 +15,37 @@ const DivLink = ({currentYear, toDiv, onSelect}) => (
   <LinkContainer to={`/${currentYear}/divs/${toDiv.id}`} onSelect={onSelect}><MenuItem>{toDiv.title}</MenuItem></LinkContainer>
 )
 
-const Navigation = ({params, years, divs}) => {
-  return (
-    <Navbar inverse fixedTop collapseOnSelect>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <Link to="/">S#</Link>
-        </Navbar.Brand>
-        <Navbar.Toggle />
-      </Navbar.Header>
-      <Navbar.Collapse>
-      <Nav>
-      <NavDropdown title='Years' id='basic-nav-dropdown'>
-        { years.map((year, i) => <YearMenuItem key={i} currentDiv={ params.div || DEFAULT_DIV } toYear={year.id} />) }
-      </NavDropdown>
-      <NavDropdown title='Divisions' id='basic-nav-dropdown'>
-        { divs && divs.map((div, i) => <DivLink key={i} currentYear={params.year || DEFAULT_YEAR } toDiv={div} />) }
-      </NavDropdown>
-      </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-  );
+class Navigation extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const { dispatch } = props;
+    dispatch(fetchDivsIfNecessary(DEFAULT_YEAR));
+  }
+
+  render() {
+    const {params, years, divs} = this.props
+    return (
+      <Navbar inverse fixedTop collapseOnSelect>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/">S#</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse>
+        <Nav>
+        <NavDropdown title='Years' id='basic-nav-dropdown'>
+          { years.map((year, i) => <YearMenuItem key={i} currentDiv={ params.div || DEFAULT_DIV } toYear={year.id} />) }
+        </NavDropdown>
+        <NavDropdown title='Divisions' id='basic-nav-dropdown'>
+          { divs && divs.map((div, i) => <DivLink key={i} currentYear={params.year || DEFAULT_YEAR } toDiv={div} />) }
+        </NavDropdown>
+        </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    );
+  }
 }
 
 const mapStateToProps = (state, { match }) => {
@@ -51,4 +62,8 @@ const mapStateToProps = (state, { match }) => {
   };
 };
 
-export default connect(mapStateToProps)(Navigation);
+const mapDispatchToProps = (dispatch) => {
+  return { dispatch }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
