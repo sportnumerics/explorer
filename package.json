@@ -7,11 +7,11 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/favicon.ico ./src/logo-196.png ./src/logo-180.png ./dist",
-    "dist": "yarn run copy & webpack --env=dist",
+    "dist": "yarn run copy & webpack --env=dist --mode production",
     "lint": "eslint ./src",
     "posttest": "yarn run lint",
     "serve": "webpack-dev-server --env=dev",
-    "serve:dist": "webpack-dev-server --env=dist",
+    "serve:dist": "webpack-dev-server --env=dist --mode production",
     "start": "webpack-dev-server --env=dev --hot --mode development",
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
@@ -35,7 +35,6 @@
     "explorer-cdn": "https://github.com/sportnumerics/explorer-cdn#1.0.1",
     "file-loader": "^1.1.10",
     "glob": "^7.0.0",
-    "html-webpack-inline-source-plugin": "0.0.9",
     "html-webpack-plugin": "^3.0.4",
     "jimp": "^0.2.27",
     "karma": "^2.0.0",
