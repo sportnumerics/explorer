@@ -39,7 +39,7 @@ aws configure set region $AWS_DEFAULT_REGION
 
 export EXPLORER_API_URL="https://$EXPLORER_API_PREFIX.sportnumerics.com"
 
-npm run dist
+yarn run dist
 
 aws cloudformation deploy --stack-name $STACK_NAME --parameter-overrides "StageParameter=$STAGE" --template-file $TEMPLATE_FILE || true
 
