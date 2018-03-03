@@ -2,7 +2,7 @@ FROM node:alpine
 
 WORKDIR /work
 
-RUN apk add --no-cache py-pip git
+RUN apk add --no-cache bash py-pip git
 
 RUN pip install --upgrade pip
 
