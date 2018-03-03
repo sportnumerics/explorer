@@ -8,15 +8,6 @@ let baseConfig = require('./base');
 module.exports = {
   devtool: 'eval',
   module: {
-    preLoaders: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: 'istanbul-instrumenter-loader',
-        include: [
-          path.join(__dirname, '/../src')
-        ]
-      }
-    ],
     loaders: [
       {
         test: /\.(png|jpg|gif|woff|woff2|css|sass|scss|less|styl)$/,

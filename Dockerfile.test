@@ -12,6 +12,6 @@ ADD package.json yarn.lock ./
 
 RUN yarn
 
-ADD . .
+ADD . ./
 
 CMD ./deploy.sh
