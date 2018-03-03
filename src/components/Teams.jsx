@@ -40,7 +40,7 @@ class Teams extends React.Component {
       </Row></Grid>
     );
   }
-};
+}
 
 const mapStateToProps = (state, { match }) => {
   const year = match.params.year;

@@ -18,7 +18,7 @@ const GamesListOrEmptyView = ({ schedule, year, div }) => {
 class Team extends React.Component {
   constructor(props) {
     super(props)
-    const { year, teamId, dispatch } = props;
+    const { year, teamId } = props;
 
     props.fetchGamesByTeamId(year, teamId)
   }
@@ -63,7 +63,7 @@ const mapStateToProps = (state, {match}) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { 
+  return {
     fetchGamesByTeamId: (year, teamId) => dispatch(fetchGamesByTeamId(year, teamId))
   };
 }
