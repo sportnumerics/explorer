@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import GameList from './GameList'
 import Loader from './Loader'
-import { fetchGamesIfNecessary, gamesKey } from '../actions/fetchGames';
+import fetchGamesByTeamId, { gamesKey } from '../actions/fetchGames';
 import { PageHeader, Well, Col, Grid, Row } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
 
@@ -19,12 +19,12 @@ class Team extends React.Component {
     super(props)
     const { year, teamId } = props;
 
-    props.fetchGamesIfNecessary(year, teamId)
+    props.fetchGamesByTeamId(year, teamId)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.year !== this.props.year || nextProps.teamId !== this.props.teamId) {
-      this.props.fetchGamesIfNecessary(nextProps.year, nextProps.teamId);
+      this.props.fetchGamesByTeamId(nextProps.year, nextProps.teamId);
     }
   }
 
@@ -63,7 +63,7 @@ const mapStateToProps = (state, {match}) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchGamesIfNecessary: (year, teamId) => dispatch(fetchGamesIfNecessary(year, teamId))
+    fetchGamesByTeamId: (year, teamId) => dispatch(fetchGamesByTeamId(year, teamId))
   };
 }
 

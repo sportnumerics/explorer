@@ -6,23 +6,23 @@ import { teamsKey } from '../actions/fetchTeams';
 import _ from 'lodash';
 import { PageHeader, Col, Grid, Row } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
-import { fetchTeamsIfNecessary } from '../actions/fetchTeams'
-import { fetchDivsIfNecessary } from '../actions/fetchDivs'
+import fetchTeams from '../actions/fetchTeams'
+import fetchDivs from '../actions/fetchDivs'
 
 class Teams extends React.Component {
   constructor(props) {
     super(props)
 
-    props.fetchDivsIfNecessary(props.year);
-    props.fetchTeamsIfNecessary(props.year, props.div.id);
+    props.fetchDivs(props.year);
+    props.fetchTeams(props.year, props.div.id);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.year !== this.props.year) {
-      this.props.fetchDivsIfNecessary(nextProps.year);
-      this.props.fetchTeamsIfNecessary(nextProps.year, nextProps.div.id);
+      this.props.fetchDivs(nextProps.year);
+      this.props.fetchTeams(nextProps.year, nextProps.div.id);
     } else if (nextProps.div !== this.props.div) {
-      this.props.fetchTeamsIfNecessary(nextProps.year, nextProps.div.id);
+      this.props.fetchTeams(nextProps.year, nextProps.div.id);
     }
   }
 
@@ -71,8 +71,8 @@ const mapStateToProps = (state, { match }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchDivsIfNecessary: (year) => dispatch(fetchDivsIfNecessary(year)),
-    fetchTeamsIfNecessary: (year, div) => dispatch(fetchTeamsIfNecessary(year, div))
+    fetchDivs: (year) => dispatch(fetchDivs(year)),
+    fetchTeams: (year, div) => dispatch(fetchTeams(year, div))
   }
 };
 
