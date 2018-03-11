@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux'
 import GameList from './GameList'
 import Loader from './Loader'
-import { gamesKey } from '../actions/fetchGames';
+import { fetchGamesIfNecessary, gamesKey } from '../actions/fetchGames';
 import { PageHeader, Well, Col, Grid, Row } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
-import fetchGamesByTeamId from '../actions/fetchGames'
 
 const GamesListOrEmptyView = ({ schedule, year, div }) => {
   if (schedule && schedule.length > 0) {
@@ -20,12 +19,12 @@ class Team extends React.Component {
     super(props)
     const { year, teamId } = props;
 
-    props.fetchGamesByTeamId(year, teamId)
+    props.fetchGamesIfNecessary(year, teamId)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.year !== this.props.year || nextProps.teamId !== this.props.teamId) {
-      this.props.fetchGamesByTeamId(nextProps.year, nextProps.teamId);
+      this.props.fetchGamesIfNecessary(nextProps.year, nextProps.teamId);
     }
   }
 
@@ -64,7 +63,7 @@ const mapStateToProps = (state, {match}) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchGamesByTeamId: (year, teamId) => dispatch(fetchGamesByTeamId(year, teamId))
+    fetchGamesIfNecessary: (year, teamId) => dispatch(fetchGamesIfNecessary(year, teamId))
   };
 }
 

@@ -18,7 +18,7 @@ function shouldFetchTeams(state, year, div) {
 export function fetchTeamsIfNecessary(year, div) {
   return (dispatch, getState) => {
     if (shouldFetchTeams(getState(), year, div)) {
-      dispatch(fetchTeams(year, div));
+      return dispatch(fetchTeams(year, div));
     }
   }
 }

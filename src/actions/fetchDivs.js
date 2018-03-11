@@ -16,7 +16,7 @@ function shouldFetchDivs(state, year) {
 export function fetchDivsIfNecessary(year) {
   return (dispatch, getState) => {
     if (shouldFetchDivs(getState(), year)) {
-      dispatch(fetchDivs(year));
+      return dispatch(fetchDivs(year));
     }
   };
 }
