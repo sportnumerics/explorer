@@ -35,7 +35,7 @@
     "explorer-cdn": "https://github.com/sportnumerics/explorer-cdn#1.0.1",
     "file-loader": "^1.1.10",
     "glob": "^7.0.0",
-    "html-webpack-plugin": "^3.0.4",
+    "html-webpack-plugin": "^3.0.6",
     "jimp": "^0.2.27",
     "karma": "^2.0.0",
     "karma-chai": "^0.1.0",
@@ -56,7 +56,7 @@
     "sass-loader": "^6.0.2",
     "style-loader": "^0.20.2",
     "url-loader": "^0.6.2",
-    "webpack": "^4.0.1",
+    "webpack": "^4.1.1",
     "webpack-cli": "^2.0.9",
     "webpack-dev-server": "^3.1.0"
   },

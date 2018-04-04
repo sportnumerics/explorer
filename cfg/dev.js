@@ -5,7 +5,6 @@ let webpack = require('webpack');
 let baseConfig = require('./base');
 let defaultSettings = require('./defaults');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
-let HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
 
 let config = Object.assign({}, baseConfig, {

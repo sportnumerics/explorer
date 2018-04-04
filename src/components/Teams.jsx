@@ -18,11 +18,12 @@ class Teams extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.year !== this.props.year || nextProps.div.id !== this.props.div.id) {
+      this.props.fetchTeams(nextProps.year, nextProps.div.id);
+    }
+
     if (nextProps.year !== this.props.year) {
       this.props.fetchDivs(nextProps.year);
-      this.props.fetchTeams(nextProps.year, nextProps.div.id);
-    } else if (nextProps.div !== this.props.div) {
-      this.props.fetchTeams(nextProps.year, nextProps.div.id);
     }
   }
 
