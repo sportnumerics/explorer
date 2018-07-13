@@ -11,8 +11,7 @@ const Logo = () => <div className="main-logo-container">
 
 const Welcome = () =>  <p className="lead">
 Welcome to the new <strong>sportnumerics</strong>. We&#8217;re
-providing computer ratings for NCAA lacrosse divisions 1, 2 and 3 at the moment,
-with MCLA coming soon.</p>
+providing computer ratings for NCAA and MCLA lacrosse.</p>
 
 const ButtonLink = ({to, children}) => <LinkContainer to={to}>
   <ListGroupItem>
@@ -38,6 +37,11 @@ const Landing = () => (
         <ButtonLink to={`/${DEFAULT_YEAR}/divs/w1`}>Division 1</ButtonLink>
         <ButtonLink to={`/${DEFAULT_YEAR}/divs/w2`}>Division 2</ButtonLink>
         <ButtonLink to={`/${DEFAULT_YEAR}/divs/w3`}>Division 3</ButtonLink>
+      </ListGroup>
+      <h4>MCLA Lacrosse</h4>
+      <ListGroup>
+        <ButtonLink to={`/${DEFAULT_YEAR}/divs/mcla1`}>Division 1</ButtonLink>
+        <ButtonLink to={`/${DEFAULT_YEAR}/divs/mcla2`}>Division 2</ButtonLink>
       </ListGroup>
     </Col>
   </Row></Grid>
