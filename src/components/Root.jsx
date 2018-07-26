@@ -21,7 +21,10 @@ const Root = () => {
     <Provider store={ store }>
       <Router history={ history } >
         <div>
-          <Route component={ Navigation } />
+          <Switch>
+            <Route path="/:year/divs/:div" component={ Navigation } />
+            <Route component={ Navigation } />
+          </Switch>
           <Switch>
             <Route exact path="/" component={ Landing } />
             <Route path="/:year/divs/:div" component={ Teams } />
