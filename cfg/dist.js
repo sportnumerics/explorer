@@ -18,7 +18,8 @@ let config = Object.assign({}, baseConfig, {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
       EXPLORER_API_URL: process.env.EXPLORER_API_URL,
-      STAGE: process.env.APP_STAGE
+      STAGE: process.env.APP_STAGE,
+      GIT_SHA: process.env.GIT_SHA
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),

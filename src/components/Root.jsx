@@ -13,6 +13,7 @@ import Team from './Team'
 import NotFoundPage from './NotFoundPage'
 import InternalErrorPage from './InternalErrorPage'
 import Landing from './Landing'
+import Status from './Status'
 
 const store = configureStore();
 
@@ -27,6 +28,7 @@ const Root = () => {
           </Switch>
           <Switch>
             <Route exact path="/" component={ Landing } />
+            <Route path="/status" component={ Status } />
             <Route path="/:year/divs/:div" component={ Teams } />
             <Route path="/:year/teams/:teamId" component={ Team } />
 

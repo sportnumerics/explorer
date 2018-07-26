@@ -76,3 +76,13 @@ body {
 .unimportant {
   color: lightgrey;
 }
+
+.status {
+  font-family: monospace;
+
+  .list-group-item {
+    .label {
+      float: right;
+    }
+  }
+}

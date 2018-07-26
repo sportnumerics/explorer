@@ -38,6 +38,7 @@ TEMPLATE_FILE="cloudformation.yml"
 aws configure set region $AWS_DEFAULT_REGION
 
 export EXPLORER_API_URL="https://$EXPLORER_API_PREFIX.sportnumerics.com"
+export GIT_SHA=`git rev-parse HEAD`
 
 yarn run dist
 
