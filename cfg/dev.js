@@ -13,6 +13,7 @@ let config = Object.assign({}, baseConfig, {
   devtool: 'inline-source-map',
   plugins: [
     new webpack.EnvironmentPlugin({
+      NODE_ENV: 'dev',
       STAGE: 'dev'
     }),
     new webpack.NoEmitOnErrorsPlugin(),

@@ -6,8 +6,8 @@ let config = {
   appEnv: 'dev',  // feel free to remove the appEnv property here
   apiUrl: 'https://explorer-api-green.sportnumerics.com',
   gitSha: 'dev',
-  appStage: 'dev',
-  nodeEnv: 'dev'
+  appStage: process.env.STAGE,
+  nodeEnv: process.env.NODE_ENV
 };
 
 export default Object.freeze(Object.assign({}, baseConfig, config));

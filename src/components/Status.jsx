@@ -8,10 +8,11 @@ const Status = () => (
       <Row>
         <Col xs={12} sm={8} smOffset={2}>
           <ListGroup>
+            <ListGroupItem>app env <Badge>{ config.appEnv }</Badge></ListGroupItem>
             <ListGroupItem>git sha <GithubLink sha={config.gitSha}><Badge>{ config.gitSha }</Badge></GithubLink></ListGroupItem>
             <ListGroupItem>api url <Label bsStyle={ /blue/.test(config.apiUrl) ? 'primary' : 'success' }>{ config.apiUrl }</Label></ListGroupItem>
             <ListGroupItem>app stage <Badge>{ config.appStage }</Badge></ListGroupItem>
-            <ListGroupItem>node env <Badge>{ config.appStage }</Badge></ListGroupItem>
+            <ListGroupItem>node env <Badge>{ config.nodeEnv }</Badge></ListGroupItem>
           </ListGroup>
         </Col>
       </Row>
