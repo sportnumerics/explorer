@@ -2,8 +2,7 @@ import React from 'react'
 import { Grid, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import logo from 'responsive-loader?sizes[]=352,sizes[]=704,sizes[]=1056!../images/logo.png'
-
-const DEFAULT_YEAR = '2018';
+import { DEFAULT_YEAR } from '../services/years';
 
 const Logo = () => <div className="main-logo-container">
   <img srcSet={logo.srcSet} src={logo.src} sizes="(max-width: 768px) 65vw, 25vw" />
