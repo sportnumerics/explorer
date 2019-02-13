@@ -53,5 +53,5 @@ else
 fi
 
 aws configure set preview.cloudfront true
-aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths / /logo-196.png /logo-180.png /favicon.ico /app.js
+aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /*
 
