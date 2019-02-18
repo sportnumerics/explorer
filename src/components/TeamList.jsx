@@ -12,7 +12,13 @@ const TeamList = ({sortBy, teams, year}) => {
       </thead>
       <tbody>
         {teams.sort(sortBy).map((team, index) => {
-          return <tr key={team.id}><td>{index+1}</td><td><Link to={`/${year}/teams/${team.id}`}>{team.name}</Link></td><td>{team.ratings && round(team.ratings.overall,2)}</td></tr>
+          return (
+            <tr key={team.id}>
+              <td>{index+1}</td>
+              <td><Link to={`/${year}/teams/${team.id}`}>{team.name}</Link>
+              { team.record && <span className="record">({team.record.wins}-{team.record.losses})</span> }</td>
+              <td>{team.ratings && round(team.ratings.overall,2)}</td>
+            </tr>);
         })}
       </tbody>
     </Table>
