@@ -19,27 +19,27 @@ const store = configureStore();
 
 const Root = () => {
   return (
-    <Provider store={ store }>
-      <Router history={ history } >
-        <div>
-          <Switch>
-            <Route path="/:year/divs/:div" component={ Navigation } />
-            <Route component={ Navigation } />
-          </Switch>
-          <Switch>
-            <Route exact path="/" component={ Landing } />
-            <Route path="/status" component={ Status } />
-            <Route path="/:year/divs/:div" component={ Teams } />
-            <Route path="/:year/teams/:teamId" component={ Team } />
+      <Provider store={ store }>
+        <Router history={ history } >
+          <div>
+            <Switch>
+              <Route path="/:year/divs/:div" component={ Navigation } />
+              <Route component={ Navigation }/>
+            </Switch>
+            <Switch>
+              <Route exact path="/" component={ Landing } />
+              <Route path="/status" component={ Status } />
+              <Route path="/:year/divs/:div" component={ Teams } />
+              <Route path="/:year/teams/:teamId" component={ Team } />
 
-            <Route path="404" component={ NotFoundPage } />
-            <Route path="500" component={ InternalErrorPage } />
-            <Route component={ NotFoundPage } />
-          </Switch>
-          <Route component={ Footer } />
-        </div>
-      </Router>
-    </Provider>
+              <Route path="404" component={ NotFoundPage } />
+              <Route path="500" component={ InternalErrorPage } />
+              <Route component={ NotFoundPage } />
+            </Switch>
+            <Footer />
+          </div>
+        </Router>
+      </Provider>
   );
 }
 
