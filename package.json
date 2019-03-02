@@ -12,7 +12,7 @@
     "posttest": "yarn run lint",
     "serve": "webpack-dev-server --env=dev",
     "serve:dist": "webpack-dev-server --env=dist --mode production",
-    "start": "webpack-dev-server --env=dev --hot --mode development",
+    "start": "webpack-dev-server --env=dev --hot --mode development --host 0.0.0.0",
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
