@@ -1,12 +1,14 @@
 #!/bin/bash
 
+
+
 encrypt () {
   echo "Encrypting $1"
-  openssl enc -aes-256-cbc -k $SPORTNUMERICS_KEY -a -in $1 -out $2
+  openssl enc -aes-256-cbc -k $SPORTNUMERICS_KEY -a -in $1 -out $2 -md sha256
 }
 
 decrypt () {
-  openssl enc -aes-256-cbc -k $SPORTNUMERICS_KEY -d -a -in $1 -out $2
+  openssl enc -aes-256-cbc -k $SPORTNUMERICS_KEY -d -a -in $1 -out $2 -md sha256
 }
 
 echoChanges () {

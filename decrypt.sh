@@ -8,5 +8,5 @@ trap onfail ERR
 
 for source in "env/env.sh"
 do
-  openssl enc -aes-256-cbc -k $SPORTNUMERICS_KEY -d -a -in $source.enc -out $source
+  openssl enc -aes-256-cbc -k $SPORTNUMERICS_KEY -d -a -in $source.enc -out $source -md sha256
 done
