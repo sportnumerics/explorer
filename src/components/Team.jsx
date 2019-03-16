@@ -1,30 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import GameList from './GameList'
+import TeamGameList from './TeamGameList'
 import Loader from './Loader'
-import fetchGamesByTeamId, { gamesKey } from '../actions/fetchGames';
+import fetchGamesByTeamId, { gamesKey } from '../actions/fetchTeamGames';
 import { PageHeader, Well, Col, Grid, Row } from 'react-bootstrap';
 import LastModifiedDate from './LastModifiedDate';
 
 const GamesListOrEmptyView = ({ schedule, year, div }) => {
   if (schedule && schedule.length > 0) {
-    return <GameList games={ schedule } year={year} div={div}/>;
+    return <TeamGameList games={ schedule } year={year} div={div}/>;
   } else {
     return <Well>This team has no games (that we know about)</Well>;
   }
 }
 
 class Team extends React.Component {
-  constructor(props) {
-    super(props)
-    const { year, teamId } = props;
-
-    props.fetchGamesByTeamId(year, teamId)
+  componentDidMount() {
+    this.props.fetchGamesByTeamId(this.props.year, this.props.teamId);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.year !== this.props.year || nextProps.teamId !== this.props.teamId) {
-      this.props.fetchGamesByTeamId(nextProps.year, nextProps.teamId);
+  componentDidUpdate(prevProps) {
+    if (this.props.year !== prevProps.year || this.props.teamId !== prevProps.teamId) {
+      this.props.fetchGamesByTeamId(this.props.year, this.props.teamId);
     }
   }
 

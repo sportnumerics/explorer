@@ -8,7 +8,7 @@ import { Router, Route, Switch } from 'react-router-dom'
 import history from '../services/history'
 import Navigation from './Navigation';
 import Footer from './Footer'
-import Teams from './Teams'
+import Division from './Division'
 import Team from './Team'
 import NotFoundPage from './NotFoundPage'
 import InternalErrorPage from './InternalErrorPage'
@@ -29,7 +29,7 @@ const Root = () => {
             <Switch>
               <Route exact path="/" component={ Landing } />
               <Route path="/status" component={ Status } />
-              <Route path="/:year/divs/:div" component={ Teams } />
+              <Route path="/:year/divs/:div" component={ Division } />
               <Route path="/:year/teams/:teamId" component={ Team } />
 
               <Route path="404" component={ NotFoundPage } />

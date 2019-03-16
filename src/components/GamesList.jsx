@@ -5,17 +5,18 @@ import { Link } from 'react-router-dom'
 import { round } from '../utils/utils'
 import { Table } from 'react-bootstrap'
 
-const GameList = ({ games, year }) => {
+const GamesList = ({ games, year }) => {
   return (
     <Table>
       <thead>
-        <tr><th>Date</th><th>Opponent</th><th>Result</th><th>Prediction</th><th>Error</th></tr>
+        <tr><th>Date</th><th>Home</th><th>Away</th><th>Result</th><th>Prediction</th><th>Error</th></tr>
       </thead>
       <tbody>
         {games.map((game, index) => {
           return (
             <tr key={index}>
               <td><GameDate iso8601dateString={game.date} /></td>
+              <td>{ game.team.name }</td>
               <td>{ !game.opponent.nonDivisional ? (<Link to={`/${year}/teams/${game.opponent.id}`}>{game.opponent.name}</Link>) : game.opponent.name }</td>
               <td>{game.result && (<GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} />) }</td>
               <td>{game.predictions && (<GameResult unimportant={game.result} pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} />) }</td>
@@ -40,4 +41,4 @@ const GameError = ({game}) => {
   }
 }
 
-export default GameList
+export default GamesList

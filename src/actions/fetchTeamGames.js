@@ -1,15 +1,19 @@
 import { createAction } from 'redux-actions';
 import gamesByTeamId from '../services/gamesByTeamId';
 
-export const FETCH_GAMES = 'FETCH_GAMES';
+export const FETCH_TEAM_GAMES = 'FETCH_TEAM_GAMES';
 
 function metaCreator(year, teamId) {
-  return {year, teamId};
+  return { year, teamId };
 }
 
-let fetchGamesByTeamId = createAction(FETCH_GAMES, gamesByTeamId, metaCreator);
+let fetchGamesByTeamId = createAction(
+  FETCH_TEAM_GAMES,
+  gamesByTeamId,
+  metaCreator
+);
 
-export default fetchGamesByTeamId
+export default fetchGamesByTeamId;
 
 function shouldFetchGames(state, year, teamId) {
   return !state.gamesByTeamId[gamesKey(year, teamId)];
@@ -20,7 +24,7 @@ export function fetchGamesIfNecessary(year, teamId) {
     if (shouldFetchGames(getState(), year, teamId)) {
       return dispatch(fetchGamesByTeamId(year, teamId));
     }
-  }
+  };
 }
 
 export function gamesKey(year, teamId) {

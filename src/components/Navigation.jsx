@@ -16,11 +16,8 @@ const DivLink = ({currentYear, toDiv, onSelect}) => (
 )
 
 class Navigation extends React.Component {
-  constructor(props) {
-    super(props);
-
-    const { dispatch } = props;
-    dispatch(fetchDivsIfNecessary(DEFAULT_YEAR));
+  componentDidMount() {
+    this.props.dispatch(fetchDivsIfNecessary(DEFAULT_YEAR));
   }
 
   render() {
