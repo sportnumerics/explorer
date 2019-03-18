@@ -108,3 +108,23 @@ $fa-font-path: "~font-awesome/fonts";
   font-size: 0.9em;
   padding-left: 1em;
 }
+
+.games-by-division {
+  .date-row {
+    padding-top: 1em;
+  }
+
+  .placeholder {
+    background-color: lighten(#000, 90%);
+    height: 1em;
+    margin: 0.1em;
+
+    &.team-name {
+      width: 7em;
+    }
+
+    &.result {
+      width: 3em;
+    }
+  }
+}

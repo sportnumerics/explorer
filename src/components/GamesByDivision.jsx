@@ -1,9 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import { Table } from 'react-bootstrap';
 import Observer from '@researchgate/react-intersection-observer';
 
-import fetchGamesByDateIfNecessary, { gamesByDateKey } from '../actions/fetchGamesByDate';
+import fetchGamesByDateIfNecessary, {
+  gamesByDateKey
+} from '../actions/fetchGamesByDate';
 import GamesList from './GamesList';
 import Loader from './Loader';
 
@@ -21,23 +24,25 @@ class GamesByDivision extends React.Component {
 
     return (
       <Loader fetching={index.isFetching} error={index.error}>
-        {_(index.result && index.result.games)
-          .map((count, date) => ({ count, date }))
-          .sortBy('date')
-          .map(({ count, date }) => {
-            return (
-              <GamesByDate
-                key={date}
-                year={year}
-                div={div}
-                date={date}
-                count={count}
-                games={gamesByDate[gamesByDateKey(year, div, date)]}
-                fetchGamesByDate={fetchGamesByDate}
-              />
-            );
-          })
-          .value()}
+        <Table className="games-by-division">
+          {_(index.result && index.result.games)
+            .map((count, date) => ({ count, date }))
+            .sortBy('date')
+            .map(({ count, date }) => {
+              return (
+                <GamesByDate
+                  key={date}
+                  year={year}
+                  div={div}
+                  date={date}
+                  count={count}
+                  games={gamesByDate[gamesByDateKey(year, div, date)]}
+                  fetchGamesByDate={fetchGamesByDate}
+                />
+              );
+            })
+            .value()}
+        </Table>
       </Loader>
     );
   }
@@ -57,7 +62,9 @@ class GamesByDate extends React.Component {
     const { year, date, games, count } = this.props;
 
     const gamesList =
-      games && games.result ? games.result.games : new Array(count).fill({});
+      games && games.result
+        ? games.result.games
+        : new Array(count).fill({ placeholder: true });
 
     return (
       <Observer onChange={this.handleChange.bind(this)}>
