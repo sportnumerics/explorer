@@ -10,7 +10,7 @@ import { PageHeader, Col, Grid, Row } from 'react-bootstrap';
 import fetchDivs from '../actions/fetchDivs';
 import Teams from './Teams';
 import Loader from './Loader';
-import GamesByDate from './GamesByDate';
+import GamesByDivision from './GamesByDivision';
 
 class Division extends React.Component {
   render() {
@@ -20,7 +20,7 @@ class Division extends React.Component {
         <Col md={6} mdOffset={3} xs={12}>
           <Loader fetching={isFetching} error={error}>
             <PageHeader>{div && div.title} <small>({year})</small></PageHeader>
-            <Nav bsStyle="pills" activeKey={ this.props.location.pathname.includes('games') ? 'games' : 'teams'}>
+            <Nav bsStyle="tabs" activeKey={ this.props.location.pathname.includes('games') ? 'games' : 'teams'}>
               <NavItem eventKey='teams'>
                 <LinkContainer to={`/${this.props.year}/divs/${this.props.div.id}`}>
                   <div>Teams</div>
@@ -37,7 +37,7 @@ class Division extends React.Component {
                 <Teams year={year} div={div} />
               </Route>
               <Route path={`/${this.props.year}/divs/${this.props.div.id}/games`} exact>
-                <GamesByDate year={this.props.year} div={this.props.div.id} date={moment().format('YYYY-MM-DD')} />
+                <GamesByDivision year={this.props.year} div={this.props.div.id}  />
               </Route>
             </Switch>
           </Loader>

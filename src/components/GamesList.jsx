@@ -1,29 +1,78 @@
-import React from 'react'
-import GameDate from './GameDate'
-import GameResult from './GameResult'
-import { Link } from 'react-router-dom'
-import { Table } from 'react-bootstrap'
+import React from 'react';
+import moment from 'moment';
+import GameResult from './GameResult';
+import { Link } from 'react-router-dom';
+import { Table } from 'react-bootstrap';
 
-const GamesList = ({ games, year }) => {
-  return (
-    <Table>
-      <thead>
-        <tr><th>Date</th><th>Home</th><th>Away</th><th>Result</th><th>Prediction</th></tr>
-      </thead>
-      <tbody>
-        {games.map((game, index) => {
-          return (
-            <tr key={index}>
-              <td><GameDate iso8601dateString={game.date} /></td>
-              <td><Link to={`/${year}/teams/${game.team.id}`}>{ game.team.name }</Link></td>
-              <td>{ !game.opponent.nonDivisional ? (<Link to={`/${year}/teams/${game.opponent.id}`}>{game.opponent.name}</Link>) : game.opponent.name }</td>
-              <td>{game.result && (<GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} />) }</td>
-              <td>{game.predictions && (<GameResult unimportant={game.result} pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} />) }</td>
-            </tr>
-        )})}
-      </tbody>
-    </Table>
-  );
+class GamesList extends React.Component {
+  render() {
+    const { year, date, games } = this.props;
+    return (
+      <Table>
+        <GamesListHeader formattedDate={moment(date).format('ddd MMM D')} />
+        <GamesListBody year={year} games={games} date={date} />
+      </Table>
+    );
+  }
 }
 
-export default GamesList
+const GamesListHeader = ({ formattedDate }) => (
+  <thead>
+    <tr>
+      <th colSpan="4">{formattedDate}</th>
+    </tr>
+    <tr>
+      <th>Home</th>
+      <th>Away</th>
+      <th>Result</th>
+      <th>Prediction</th>
+    </tr>
+  </thead>
+);
+
+const GamesListBody = ({ year, games, date }) => (
+  <tbody>
+    {games.map((game, index) => {
+      return (
+        <tr key={index}>
+          <td>
+            {game.team && (
+              <Link to={`/${year}/teams/${game.team.id}`}>
+                {game.team.name}
+              </Link>
+            )}
+          </td>
+          <td>
+            {game.opponent &&
+              (!game.opponent.nonDivisional ? (
+                <Link to={`/${year}/teams/${game.opponent.id}`}>
+                  {game.opponent.name}
+                </Link>
+              ) : (
+                <span>{game.opponent.name}</span>
+              ))}
+          </td>
+          <td>
+            {game.result && (
+              <GameResult
+                pointsFor={game.result.pointsFor}
+                pointsAgainst={game.result.pointsAgainst}
+              />
+            )}
+          </td>
+          <td>
+            {game.predictions && (
+              <GameResult
+                unimportant={moment().isAfter(moment(date))}
+                pointsFor={game.predictions.llsGoalsFor}
+                pointsAgainst={game.predictions.llsGoalsAgainst}
+              />
+            )}
+          </td>
+        </tr>
+      );
+    })}
+  </tbody>
+);
+
+export default GamesList;
