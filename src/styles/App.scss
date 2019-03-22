@@ -81,6 +81,10 @@ $fa-font-path: "~font-awesome/fonts";
   color: lightgrey;
 }
 
+.prediction {
+  font-style: italic;
+}
+
 .status {
   font-family: monospace;
 
@@ -110,12 +114,48 @@ $fa-font-path: "~font-awesome/fonts";
 }
 
 .games-by-division {
-  .date-row {
+  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+
+  .date {
     padding-top: 1em;
+    font-weight: bold;
+  }
+
+  .gbd-row {
+    display: flex;
+    line-height: 1.5;
+
+    .team-rank {
+      font-size: 0.75em;
+      vertical-align: top;
+      padding-right: 0.25em;
+    }
+
+    .team-name {
+      flex: 2;
+      padding-left: 0.1em;
+      padding-right: 0.1em;
+    }
+
+    .result {
+      flex: 1.1;
+      padding-left: 0.1em;
+      padding-right: 0.1em;
+    }
+
+    &.header {
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+    }
+
+    &.game {
+      border-top: 1px solid #ddd;
+    }
   }
 
   .placeholder {
-    background-color: lighten(#000, 90%);
     height: 1em;
     margin: 0.1em;
 
@@ -125,6 +165,9 @@ $fa-font-path: "~font-awesome/fonts";
 
     &.result {
       width: 3em;
+    }
+
+    &:not(.empty) {
     }
   }
 }

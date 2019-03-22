@@ -4,6 +4,7 @@ import GameResult from './GameResult'
 import { Link } from 'react-router-dom'
 import { round } from '../utils/utils'
 import { Table } from 'react-bootstrap'
+import moment from 'moment';
 
 const TeamGameList = ({ games, year }) => {
   return (
@@ -18,7 +19,7 @@ const TeamGameList = ({ games, year }) => {
               <td><GameDate iso8601dateString={game.date} /></td>
               <td>{ !game.opponent.nonDivisional ? (<Link to={`/${year}/teams/${game.opponent.id}`}>{game.opponent.name}</Link>) : game.opponent.name }</td>
               <td>{game.result && (<GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} />) }</td>
-              <td>{game.predictions && (<GameResult unimportant={game.result} pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} />) }</td>
+              <td>{game.predictions && (<GameResult prediction unimportant={moment(game.date).isAfter} pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} />) }</td>
               <td><GameError game={game}/></td>
             </tr>
         )})}

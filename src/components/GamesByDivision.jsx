@@ -1,16 +1,27 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Observer from '@researchgate/react-intersection-observer';
+import moment from 'moment'
 
-import fetchGamesByDateIfNecessary, {
+import {
+  fetchGamesByDateIfNecessary,
   gamesByDateKey
 } from '../actions/fetchGamesByDate';
 import GamesList from './GamesList';
 import Loader from './Loader';
 
 class GamesByDivision extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      fromDate: moment()
+    };
+
+    this.loadPrevious = this.loadPrevious.bind(this);
+  }
+
   componentDidMount() {
     const { year, div, fetchGamesByDate } = this.props;
 
@@ -20,13 +31,13 @@ class GamesByDivision extends React.Component {
   render() {
     const { year, div, index, gamesByDate, fetchGamesByDate } = this.props;
 
-    console.log('Index: ', index);
-
     return (
       <Loader fetching={index.isFetching} error={index.error}>
-        <Table className="games-by-division">
+        <div className="games-by-division">
+          <Button onClick={this.loadPrevious}>Previous day</Button>
           {_(index.result && index.result.games)
             .map((count, date) => ({ count, date }))
+            .filter(({date}) => moment(date).isSameOrAfter(this.state.fromDate))
             .sortBy('date')
             .map(({ count, date }) => {
               return (
@@ -42,9 +53,26 @@ class GamesByDivision extends React.Component {
               );
             })
             .value()}
-        </Table>
+        </div>
       </Loader>
     );
+  }
+
+  loadPrevious() {
+    this.setState((state, props) => {
+      const { fromDate } = state;
+      const { index } = props;
+      return { fromDate: this.priorDateWithGames(index, fromDate) };
+    });
+  }
+
+  priorDateWithGames(index, fromDate) {
+    const { result: { games }} = index;
+    return moment(_(games)
+      .map((count, date) => ({ count, date }))
+      .filter(({date}) => moment(date).isBefore(fromDate))
+      .sortBy('date')
+      .last().date);
   }
 }
 
@@ -53,7 +81,6 @@ class GamesByDate extends React.Component {
     if (isIntersecting) {
       const { year, div, date, fetchGamesByDate } = this.props;
 
-      console.log(`Fetching ${year}  ${div} ${date}`);
       fetchGamesByDate(year, div, date);
     }
   }

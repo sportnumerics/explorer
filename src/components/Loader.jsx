@@ -7,7 +7,7 @@ const Loader = ({fetching, error, children}) => {
   } else if (error) {
     return <ErrorPage error={error} />
   } else {
-    return <div>{children}</div>;
+    return children;
   }
 }
 

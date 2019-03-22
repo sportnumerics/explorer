@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import _ from 'lodash';
-import moment from 'moment';
 import { Nav, NavItem } from 'react-bootstrap';
 import { Switch, Route } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
