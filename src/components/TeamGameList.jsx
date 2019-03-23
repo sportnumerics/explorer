@@ -10,16 +10,17 @@ const TeamGameList = ({ games, year }) => {
   return (
     <Table>
       <thead>
-        <tr><th>Date</th><th>Opponent</th><th>Result</th><th>Prediction</th><th>Error</th></tr>
+        <tr><th>Date</th><th>Opponent</th><th>Score</th><th>Error</th></tr>
       </thead>
       <tbody>
         {games.map((game, index) => {
           return (
-            <tr key={index}>
+            <tr key={index} className="team-game-row">
               <td><GameDate iso8601dateString={game.date} /></td>
               <td>{ !game.opponent.nonDivisional ? (<Link to={`/${year}/teams/${game.opponent.id}`}>{game.opponent.name}</Link>) : game.opponent.name }</td>
-              <td>{game.result && (<GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} />) }</td>
-              <td>{game.predictions && (<GameResult prediction unimportant={moment(game.date).isAfter} pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} />) }</td>
+              <td>{game.result
+                ? (<GameResult pointsFor={game.result.pointsFor} pointsAgainst={game.result.pointsAgainst} />)
+                : game.predictions && (<GameResult prediction unimportant={moment(game.date).isAfter} pointsFor={game.predictions.llsGoalsFor} pointsAgainst={game.predictions.llsGoalsAgainst} />)}</td>
               <td><GameError game={game}/></td>
             </tr>
         )})}

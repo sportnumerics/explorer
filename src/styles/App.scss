@@ -1,5 +1,5 @@
 /* Base Application Styles */
-@import "Colors";
+@import 'Colors';
 
 $footer-height: 60px;
 
@@ -18,7 +18,8 @@ body {
   padding-bottom: $footer-height + 10px;
 }
 
-.spinner-container, .error-container {
+.spinner-container,
+.error-container {
   padding-top: 10rem;
   text-align: center;
 }
@@ -40,11 +41,11 @@ $navbar-inverse-link-color: lighten(#000, 80%);
 $nav-inverse-bg: darken($primary-color, 15%);
 $nav-inverse-link-color: lighten(#000, 80%);
 
-$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-@import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome.scss";
+$fa-font-path: '~font-awesome/fonts';
+@import '~font-awesome/scss/font-awesome.scss';
 
 .main-logo-container {
   margin-bottom: 30px;
@@ -77,12 +78,35 @@ $fa-font-path: "~font-awesome/fonts";
   color: red;
 }
 
-.unimportant {
-  color: lightgrey;
+table > tbody > tr.team-game-row {
+  height: 3em;
+
+  td {
+    vertical-align: middle;
+  }
 }
 
-.prediction {
-  font-style: italic;
+.result-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  .prediction {
+    color: grey;
+    font-style: italic;
+    flex: 2;
+    margin-top: 0.1em;
+    margin-bottom: -0.3em;
+  }
+
+  .projection-annotation {
+    color: grey;
+    font-style: italic;
+    flex: 1;
+    font-size: 0.7em;
+    margin-bottom: 0.3em;
+  }
 }
 
 .status {
@@ -126,7 +150,7 @@ $fa-font-path: "~font-awesome/fonts";
   .gbd-row {
     display: flex;
     line-height: 1.5;
-    min-height: 2.2em;
+    min-height: 3em;
     align-items: center;
 
     .team-rank {
@@ -142,37 +166,21 @@ $fa-font-path: "~font-awesome/fonts";
     }
 
     .result {
-      flex: 1.1;
+      flex: 1;
       padding-left: 0.1em;
       padding-right: 0.1em;
+      text-align: center;
     }
 
     &.header {
       font-weight: bold;
       border-bottom: 1px solid #ddd;
       align-items: flex-end;
+      min-height: 1.5em;
     }
 
     &.game {
       border-top: 1px solid #ddd;
-    }
-  }
-
-  .placeholder {
-    height: 1em;
-    margin: 0.1em;
-    color: transparent;
-    text-shadow: 0 0 10px rgba(0,0,0,0.2);
-
-    &.team-name {
-      width: 7em;
-    }
-
-    &.result {
-      width: 3em;
-    }
-
-    &:not(.empty) {
     }
   }
 }

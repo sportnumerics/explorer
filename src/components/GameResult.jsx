@@ -9,21 +9,19 @@ function winOrLoss(pointsFor, pointsAgainst) {
 }
 
 const GameResult = ({
-  unimportant,
   pointsFor,
   pointsAgainst,
   prediction,
   showWinLoss = true
 }) => {
-  const classes = [
-    unimportant ? 'unimportant' : '',
-    prediction ? 'prediction' : ''
-  ].join(' ');
   return (
-    <span className={classes}>
-      {normalize(pointsFor)}-{normalize(pointsAgainst)}{' '}
-      {showWinLoss && winOrLoss(pointsFor, pointsAgainst)}
-    </span>
+    <div className="result-container">
+      <div className={prediction ? 'prediction' : 'final'}>
+        {normalize(pointsFor)}-{normalize(pointsAgainst)}{' '}
+        {showWinLoss && winOrLoss(pointsFor, pointsAgainst)}
+      </div>
+      {prediction && <div className="projection-annotation">(projected)</div>}
+    </div>
   );
 };
 
