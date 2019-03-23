@@ -1,4 +1,5 @@
 import 'core-js/fn/object/assign';
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/Root';
@@ -8,7 +9,7 @@ import config from 'config';
 
 ReactGA.initialize(config.gaTrackingId, config.gaOptions);
 
-history.listen( location =>  {
+history.listen(location => {
   ReactGA.set({ page: location.pathname });
   ReactGA.pageview(location.pathname);
 });
