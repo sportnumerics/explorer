@@ -34,6 +34,7 @@ class GamesList extends React.Component {
                 <GameResult
                   pointsFor={game.result.pointsFor}
                   pointsAgainst={game.result.pointsAgainst}
+                  showWinLoss={false}
                 />
               )}
             </div>
@@ -44,6 +45,7 @@ class GamesList extends React.Component {
                   unimportant={game.result || moment(date).diff(moment(), 'days') < 0}
                   pointsFor={game.predictions.llsGoalsFor}
                   pointsAgainst={game.predictions.llsGoalsAgainst}
+                  showWinLoss={false}
                 />
               )}
             </div>

@@ -75,7 +75,7 @@ class GamesByDivision extends React.Component {
     return moment(
       _(games)
         .map((count, date) => ({ count, date }))
-        .filter(({ date }) => moment(date).isBefore(fromDate))
+        .filter(({ date }) => moment(date).diff(fromDate, 'days') < 0)
         .sortBy('date')
         .last().date
     );
