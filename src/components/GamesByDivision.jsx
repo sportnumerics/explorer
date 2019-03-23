@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import Observer from '@researchgate/react-intersection-observer';
-import moment from 'moment'
+import moment from 'moment';
 
 import {
   fetchGamesByDateIfNecessary,
@@ -14,7 +14,7 @@ import Loader from './Loader';
 
 class GamesByDivision extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       fromDate: moment()
     };
@@ -37,7 +37,9 @@ class GamesByDivision extends React.Component {
           <Button onClick={this.loadPrevious}>Previous day</Button>
           {_(index.result && index.result.games)
             .map((count, date) => ({ count, date }))
-            .filter(({date}) => moment(date).isSameOrAfter(this.state.fromDate))
+            .filter(({ date }) =>
+              moment(date).diff(this.state.fromDate, 'days') >= 0
+            )
             .sortBy('date')
             .map(({ count, date }) => {
               return (
@@ -67,12 +69,16 @@ class GamesByDivision extends React.Component {
   }
 
   priorDateWithGames(index, fromDate) {
-    const { result: { games }} = index;
-    return moment(_(games)
-      .map((count, date) => ({ count, date }))
-      .filter(({date}) => moment(date).isBefore(fromDate))
-      .sortBy('date')
-      .last().date);
+    const {
+      result: { games }
+    } = index;
+    return moment(
+      _(games)
+        .map((count, date) => ({ count, date }))
+        .filter(({ date }) => moment(date).isBefore(fromDate))
+        .sortBy('date')
+        .last().date
+    );
   }
 }
 
@@ -88,14 +94,15 @@ class GamesByDate extends React.Component {
   render() {
     const { year, date, games, count } = this.props;
 
+    const fetching = games && games.isFetching;
     const gamesList =
       games && games.result
         ? games.result.games
-        : new Array(count).fill({ placeholder: true });
+        : Array(count).fill({ placeholder: true });
 
     return (
-      <Observer onChange={this.handleChange.bind(this)}>
-        <GamesList date={date} year={year} games={gamesList} />
+      <Observer key="observer" onChange={this.handleChange.bind(this)}>
+        <GamesList fetching={fetching} date={date} year={year} games={gamesList} />
       </Observer>
     );
   }

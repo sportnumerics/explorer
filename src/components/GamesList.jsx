@@ -2,14 +2,16 @@ import React from 'react';
 import moment from 'moment';
 import GameResult from './GameResult';
 import { Link } from 'react-router-dom';
+import LoadingBar from './LoadingBar';
 
 class GamesList extends React.Component {
   render() {
-    const { year, date, games } = this.props;
+    const { fetching, year, date, games } = this.props;
     return [
       <div key={`${date}-date`} className="date gbd-row" id={date}>
         {moment(date).format('ddd MMM D')}
       </div>,
+      fetching && <LoadingBar key="loader" />,
       <div key={`${date}-heaeder`} className="header gbd-row">
         <div className="team-name">Home</div>
         <div className="team-name">Away</div>
@@ -18,12 +20,7 @@ class GamesList extends React.Component {
       </div>,
       games.map((game, index) =>
         game.placeholder ? (
-          <div key={`${date}-game-${index}`} className="game gbd-row">
-            <PlaceholderCell type="team-name" />
-            <PlaceholderCell type="team-name" />
-            <PlaceholderCell type="result" isEmpty={moment(date).isAfter()} />
-            <PlaceholderCell type="result" />
-          </div>
+          <div key={`${date}-game-${index}`} className="game gbd-row" />
         ) : (
           <div key={`${date}-game-${index}`} className="game gbd-row">
             <div className="team-name">
@@ -44,7 +41,7 @@ class GamesList extends React.Component {
               {game.predictions && (
                 <GameResult
                   prediction
-                  unimportant={moment().isAfter(moment(date))}
+                  unimportant={game.result || moment(date).diff(moment(), 'days') < 0}
                   pointsFor={game.predictions.llsGoalsFor}
                   pointsAgainst={game.predictions.llsGoalsAgainst}
                 />
@@ -56,8 +53,6 @@ class GamesList extends React.Component {
     ];
   }
 }
-
-const PlaceholderCell = ({ type, isEmpty }) => <div className={ `placeholder ${type} ${isEmpty && 'empty'}`} />;
 
 const TeamName = ({ year, team }) => [
   <TeamRank key="rank" team={team} />,

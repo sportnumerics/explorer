@@ -3,8 +3,9 @@
 import baseConfig from './base';
 
 let config = {
-  appEnv: 'dev',  // feel free to remove the appEnv property here
+  appEnv: 'dev', // feel free to remove the appEnv property here
   apiUrl: 'https://explorer-api-blue.sportnumerics.com',
+  // apiUrl: 'http://localhost:3000',
   gitSha: 'dev',
   appStage: process.env.STAGE,
   nodeEnv: process.env.NODE_ENV
