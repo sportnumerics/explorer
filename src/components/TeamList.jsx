@@ -1,24 +1,35 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { round } from '../utils/utils'
-import { Table } from 'react-bootstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { round } from '../utils/utils';
+import { Table } from 'react-bootstrap';
 
-const TeamList = ({sortBy, teams, year}) => {
+const TeamList = ({ sortBy, teams, year }) => {
   return (
     <Table>
       <thead>
-        <tr><th /><th>Team</th><th>Rating</th></tr>
+        <tr>
+          <th />
+          <th>Team</th>
+          <th>Rating</th>
+        </tr>
       </thead>
       <tbody>
         {teams.sort(sortBy).map((team, index) => {
           return (
             <tr key={team.id}>
-              <td>{index+1}</td>
-              <td><Link to={`/${year}/teams/${team.id}`}>{team.name}</Link>
-              { team.record && <span className="record">({team.record.wins}-{team.record.losses})</span> }</td>
-              <td>{team.ratings && round(team.ratings.overall,2)}</td>
-            </tr>);
+              <td>{index + 1}</td>
+              <td>
+                <Link to={`/${year}/teams/${team.id}`}>{team.name}</Link>
+                {team.record && (
+                  <span className="record">
+                    ({team.record.wins}-{team.record.losses})
+                  </span>
+                )}
+              </td>
+              <td>{team.ratings && round(team.ratings.overall, 2)}</td>
+            </tr>
+          );
         })}
       </tbody>
     </Table>

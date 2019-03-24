@@ -137,6 +137,12 @@ table > tbody > tr.team-game-row {
   padding-left: 1em;
 }
 
+.team-rank {
+  font-size: 0.75em;
+  vertical-align: top;
+  padding-right: 0.25em;
+}
+
 .games-by-division {
   padding: 0.5em;
   display: flex;
@@ -152,12 +158,6 @@ table > tbody > tr.team-game-row {
     line-height: 1.5;
     min-height: 3em;
     align-items: center;
-
-    .team-rank {
-      font-size: 0.75em;
-      vertical-align: top;
-      padding-right: 0.25em;
-    }
 
     .team-name {
       flex: 2;

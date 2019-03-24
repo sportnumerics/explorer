@@ -3,6 +3,7 @@ import moment from 'moment';
 import GameResult from './GameResult';
 import { Link } from 'react-router-dom';
 import LoadingBar from './LoadingBar';
+import TeamRank from './TeamRank';
 
 class GamesList extends React.Component {
   render() {
@@ -78,8 +79,5 @@ const TeamName = ({ year, team }) => [
     <span key="name">{team.name}</span>
   )
 ];
-
-const TeamRank = ({ team }) =>
-  team.rank < 25 ? <span className="team-rank">{team.rank}</span> : null;
 
 export default GamesList;
