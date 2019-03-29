@@ -13,33 +13,41 @@ class GamesList extends React.Component {
         {moment(date).format('ddd MMM D')}
       </div>,
       fetching && <LoadingBar key="loader" />,
-      <div key={`${date}-heaeder`} className="header gbd-row">
+      <div key={`${date}-header`} className="header gbd-row">
         <div className="team-name">Away</div>
         <div className="team-name">Home</div>
         <div className="result">Score</div>
       </div>,
       games.map((game, index) =>
         game.placeholder ? (
-          <PlaceholderRow index={index} date={date} />
+          <PlaceholderRow
+            key={`${date}-game-${index}`}
+            index={index}
+            date={date}
+          />
         ) : (
-          <GameRow year={year} date={date} game={game} index={index} />
+          <GameRow
+            key={`${date}-game-${index}`}
+            year={year}
+            date={date}
+            game={game}
+            index={index}
+          />
         )
       )
     ];
   }
 }
 
-const PlaceholderRow = ({ date, index }) => (
-  <div key={`${date}-game-${index}`} className="game gbd-row" />
-);
+const PlaceholderRow = () => <div className="game gbd-row" />;
 
-const GameRow = ({ year, date, game, index }) => {
+const GameRow = ({ year, date, game }) => {
   const teams =
     game.location.type === 'home'
       ? { home: game.team, away: game.opponent }
       : { home: game.opponent, away: game.team };
   return (
-    <div key={`${date}-game-${index}`} className="game gbd-row">
+    <div className="game gbd-row">
       <div className="team-name">
         <TeamName year={year} team={teams.away} />
       </div>

@@ -12,12 +12,11 @@ import {
 import GamesList from './GamesList';
 import Loader from './Loader';
 
+const FROM_DATE_URL_KEY = 'from';
+
 class GamesByDivision extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      fromDate: moment()
-    };
 
     this.loadPrevious = this.loadPrevious.bind(this);
   }
@@ -29,7 +28,9 @@ class GamesByDivision extends React.Component {
   }
 
   render() {
-    const { year, div, index, gamesByDate, fetchGamesByDate } = this.props;
+    const { year, div, index, gamesByDate, fetchGamesByDate, location } = this.props;
+
+    const fromDate = this.fromDateFromLocation(location);
 
     return (
       <Loader fetching={index.isFetching} error={index.error}>
@@ -38,7 +39,7 @@ class GamesByDivision extends React.Component {
           {_(index.result && index.result.games)
             .map((count, date) => ({ count, date }))
             .filter(({ date }) =>
-              moment(date).diff(this.state.fromDate, 'days') >= 0
+              moment(date).diff(fromDate, 'days') >= 0
             )
             .sortBy('date')
             .map(({ count, date }) => {
@@ -61,11 +62,21 @@ class GamesByDivision extends React.Component {
   }
 
   loadPrevious() {
-    this.setState((state, props) => {
-      const { fromDate } = state;
-      const { index } = props;
-      return { fromDate: this.priorDateWithGames(index, fromDate) };
-    });
+    const { history, index, location } = this.props;
+
+    const fromDate = this.fromDateFromLocation(location);
+
+    const newFromDate = this.priorDateWithGames(index, fromDate);
+
+    const params = new URLSearchParams(location.search);
+    params.set(FROM_DATE_URL_KEY, newFromDate.format('YYYY-MM-DD'));
+
+    const newLocation = {
+      ...location,
+      search: `?${params.toString()}`
+    }
+
+    history.replace(newLocation);
   }
 
   priorDateWithGames(index, fromDate) {
@@ -79,6 +90,11 @@ class GamesByDivision extends React.Component {
         .sortBy('date')
         .last().date
     );
+  }
+
+  fromDateFromLocation(location) {
+    const params = new URLSearchParams(location.search);
+    return params.has(FROM_DATE_URL_KEY) ? moment(params.get(FROM_DATE_URL_KEY)) : moment();
   }
 }
 
