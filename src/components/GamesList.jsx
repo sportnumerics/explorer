@@ -42,32 +42,42 @@ class GamesList extends React.Component {
 const PlaceholderRow = () => <div className="game gbd-row" />;
 
 const GameRow = ({ year, date, game }) => {
-  const teams =
+  const ordered =
     game.location.type === 'home'
-      ? { home: game.team, away: game.opponent }
-      : { home: game.opponent, away: game.team };
+      ? {
+          home: game.team,
+          away: game.opponent,
+          result: game.result && homeResult(game.result),
+          predictions: game.predictions && homePredictions(game.predictions)
+        }
+      : {
+          home: game.opponent,
+          away: game.team,
+          result: game.result && game.result,
+          predictions: game.predictions && game.predictions
+        };
   return (
     <div className="game gbd-row">
       <div className="team-name">
-        <TeamName year={year} team={teams.away} />
+        <TeamName year={year} team={ordered.away} />
       </div>
       <div className="team-name">
-        <TeamName year={year} team={teams.home} />
+        <TeamName year={year} team={ordered.home} />
       </div>
       <div className="result">
-        {game.result ? (
+        {ordered.result ? (
           <GameResult
-            pointsFor={game.result.pointsFor}
-            pointsAgainst={game.result.pointsAgainst}
+            pointsFor={ordered.result.pointsFor}
+            pointsAgainst={ordered.result.pointsAgainst}
             showWinLoss={false}
           />
         ) : (
-          game.predictions && (
+          ordered.predictions && (
             <GameResult
               prediction
               unimportant={moment(date).diff(moment(), 'days') < 0}
-              pointsFor={game.predictions.llsGoalsFor}
-              pointsAgainst={game.predictions.llsGoalsAgainst}
+              pointsFor={ordered.predictions.llsGoalsFor}
+              pointsAgainst={ordered.predictions.llsGoalsAgainst}
               showWinLoss={false}
             />
           )
@@ -76,6 +86,20 @@ const GameRow = ({ year, date, game }) => {
     </div>
   );
 };
+
+function homeResult({ pointsFor, pointsAgainst }) {
+  return {
+    pointsFor: pointsAgainst,
+    pointsAgainst: pointsFor
+  };
+}
+
+function homePredictions({ llsGoalsFor, llsGoalsAgainst }) {
+  return {
+    llsGoalsFor: llsGoalsAgainst,
+    llsGoalsAgainst: llsGoalsFor
+  };
+}
 
 const TeamName = ({ year, team }) => [
   <TeamRank key="rank" team={team} />,
