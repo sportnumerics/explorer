@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import _ from 'lodash';
 import GameResult from './GameResult';
 import { Link } from 'react-router-dom';
 import LoadingBar from './LoadingBar';
@@ -18,25 +19,32 @@ class GamesList extends React.Component {
         <div className="team-name">Home</div>
         <div className="result">Score</div>
       </div>,
-      games.map((game, index) =>
-        game.placeholder ? (
-          <PlaceholderRow
-            key={`${date}-game-${index}`}
-            index={index}
-            date={date}
-          />
-        ) : (
-          <GameRow
-            key={`${date}-game-${index}`}
-            year={year}
-            date={date}
-            game={game}
-            index={index}
-          />
-        )
+      _.sortBy(games, gameSort).map(
+        (game, index) =>
+          game.placeholder ? (
+            <PlaceholderRow
+              key={`${date}-game-${index}`}
+              index={index}
+              date={date}
+            />
+          ) : (
+            <GameRow
+              key={`${date}-game-${index}`}
+              year={year}
+              date={date}
+              game={game}
+              index={index}
+            />
+          )
       )
     ];
   }
+}
+
+function gameSort(game) {
+  return (game.team && game.opponent)
+    ? game.team.rank + game.opponent.rank
+    : Infinity
 }
 
 const PlaceholderRow = () => <div className="game gbd-row" />;
