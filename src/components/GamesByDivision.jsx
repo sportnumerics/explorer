@@ -167,7 +167,7 @@ class GamesIndex {
 
     const dates = this.sortedGameDates();
 
-    return date.diff(_.first(dates), 'days') > 0;
+    return moment(date).diff(_.first(dates), 'days') > 0;
   }
 
   areThereGamesAfter(date) {
