@@ -28,34 +28,36 @@ class GamesByDivision extends React.Component {
   }
 
   render() {
-    const { year, div, index, gamesByDate, fetchGamesByDate, location } = this.props;
+    const {
+      year,
+      div,
+      index,
+      gamesByDate,
+      fetchGamesByDate,
+      location
+    } = this.props;
 
-    const fromDate = this.fromDateFromLocation(location);
+    const fromDate = this.fromDateFromLocation(location) || index.defaultDate();
 
     return (
       <Loader fetching={index.isFetching} error={index.error}>
         <div className="games-by-division">
-          <Button onClick={this.loadPrevious}>Previous day</Button>
-          {_(index.result && index.result.games)
-            .map((count, date) => ({ count, date }))
-            .filter(({ date }) =>
-              moment(date).diff(fromDate, 'days') >= 0
-            )
-            .sortBy('date')
-            .map(({ count, date }) => {
-              return (
-                <GamesByDate
-                  key={date}
-                  year={year}
-                  div={div}
-                  date={date}
-                  count={count}
-                  games={gamesByDate[gamesByDateKey(year, div, date)]}
-                  fetchGamesByDate={fetchGamesByDate}
-                />
-              );
-            })
-            .value()}
+          {index.areThereGamesBefore(fromDate) && (
+            <Button onClick={this.loadPrevious}>Previous day</Button>
+          )}
+          {index.gamesAfterDate(fromDate).map(({ count, date }) => {
+            return (
+              <GamesByDate
+                key={date}
+                year={year}
+                div={div}
+                date={date}
+                count={count}
+                games={gamesByDate[gamesByDateKey(year, div, date)]}
+                fetchGamesByDate={fetchGamesByDate}
+              />
+            );
+          })}
         </div>
       </Loader>
     );
@@ -64,9 +66,9 @@ class GamesByDivision extends React.Component {
   loadPrevious() {
     const { history, index, location } = this.props;
 
-    const fromDate = this.fromDateFromLocation(location);
+    const fromDate = this.fromDateFromLocation(location) || index.defaultDate();
 
-    const newFromDate = this.priorDateWithGames(index, fromDate);
+    const newFromDate = index.previousDateWithGames(fromDate);
 
     const params = new URLSearchParams(location.search);
     params.set(FROM_DATE_URL_KEY, newFromDate.format('YYYY-MM-DD'));
@@ -74,27 +76,15 @@ class GamesByDivision extends React.Component {
     const newLocation = {
       ...location,
       search: `?${params.toString()}`
-    }
+    };
 
     history.replace(newLocation);
   }
 
-  priorDateWithGames(index, fromDate) {
-    const {
-      result: { games }
-    } = index;
-    return moment(
-      _(games)
-        .map((count, date) => ({ count, date }))
-        .filter(({ date }) => moment(date).diff(fromDate, 'days') < 0)
-        .sortBy('date')
-        .last().date
-    );
-  }
-
   fromDateFromLocation(location) {
     const params = new URLSearchParams(location.search);
-    return params.has(FROM_DATE_URL_KEY) ? moment(params.get(FROM_DATE_URL_KEY)) : moment();
+    return params.has(FROM_DATE_URL_KEY)
+      && moment(params.get(FROM_DATE_URL_KEY));
   }
 }
 
@@ -118,16 +108,92 @@ class GamesByDate extends React.Component {
 
     return (
       <Observer key="observer" onChange={this.handleChange.bind(this)}>
-        <GamesList fetching={fetching} date={date} year={year} games={gamesList} />
+        <GamesList
+          fetching={fetching}
+          date={date}
+          year={year}
+          games={gamesList}
+        />
       </Observer>
     );
   }
 }
 
+class GamesIndex {
+  constructor(index) {
+    this.isFetching = index.isFetching;
+    this.error = index.error;
+    this.games = (index.result && index.result.games) || {};
+  }
+
+  defaultDate() {
+    if (this.areThereGamesAfter(moment())) {
+      return moment();
+    } else {
+      return _.first(this.sortedGameDates());
+    }
+  }
+
+  gamesAfterDate(date) {
+    if (!this.games) {
+      return [];
+    }
+
+    return _(this.games)
+      .map((count, date) => ({ count, date }))
+      .filter(({ date: d }) => moment(d).diff(date, 'days') >= 0)
+      .sortBy('date')
+      .value();
+  }
+
+  previousDateWithGames(date) {
+    if (!this.games) {
+      return null;
+    }
+
+    return moment(
+      _(this.games)
+        .map((count, date) => ({ count, date }))
+        .filter(({ date: d }) => moment(d).diff(date, 'days') < 0)
+        .sortBy('date')
+        .last().date
+    );
+  }
+
+  areThereGamesBefore(date) {
+    if (!this.games || !date) {
+      return false;
+    }
+
+    const dates = this.sortedGameDates();
+
+    return date.diff(_.first(dates), 'days') > 0;
+  }
+
+  areThereGamesAfter(date) {
+    if (!this.games || !date) {
+      return false;
+    }
+
+    const dates = this.sortedGameDates();
+
+    return moment(_.last(dates)).diff(date, 'days') > 0;
+  }
+
+  sortedGameDates() {
+    return _(this.games)
+      .keys()
+      .sortBy()
+      .value();
+  }
+}
+
 const mapStateToProps = (state, { year, div }) => {
-  const index = state.gamesByDate[gamesByDateKey(year, div, 'index')] || {
-    isFetching: true
-  };
+  const index = new GamesIndex(
+    state.gamesByDate[gamesByDateKey(year, div, 'index')] || {
+      isFetching: true
+    }
+  );
   const gamesByDate = state.gamesByDate;
 
   return {

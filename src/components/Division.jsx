@@ -12,6 +12,16 @@ import Loader from './Loader';
 import GamesByDivision from './GamesByDivision';
 
 class Division extends React.Component {
+  componentDidMount() {
+    this.props.fetchDivs(this.props.year);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.year !== prevProps.year) {
+      this.props.fetchDivs(this.props.year);
+    }
+  }
+
   render() {
     const { error, isFetching, year, div } = this.props;
     return (
