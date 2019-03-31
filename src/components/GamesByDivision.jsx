@@ -41,7 +41,7 @@ class GamesByDivision extends React.Component {
 
     return (
       <Loader fetching={index.isFetching} error={index.error}>
-        <div className="games-by-division">
+        <div className="sn-table games-by-division">
           {index.areThereGamesBefore(fromDate) && (
             <Button onClick={this.loadPrevious}>Previous day</Button>
           )}

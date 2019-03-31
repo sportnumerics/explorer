@@ -78,11 +78,22 @@ $fa-font-path: '~font-awesome/fonts';
   color: red;
 }
 
-table > tbody > tr.team-game-row {
-  height: 3em;
+.team-game-list {
+  .date {
+    flex: 1;
+  }
 
-  td {
-    vertical-align: middle;
+  .opponent {
+    flex: 3;
+  }
+
+  .score {
+    flex: 2;
+    text-align: center;
+  }
+
+  .error {
+    flex: 1;
   }
 }
 
@@ -144,43 +155,63 @@ table > tbody > tr.team-game-row {
 }
 
 .games-by-division {
-  padding: 0.5em;
-  display: flex;
-  flex-direction: column;
-
   .date {
     padding-top: 1em;
     font-weight: bold;
   }
 
-  .gbd-row {
+  .team-name {
+    flex: 2;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+  }
+
+  .result {
+    flex: 1;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+    text-align: center;
+  }
+}
+
+.team-list {
+  .rank {
+    flex: 1;
+    text-align: center;
+  }
+
+  .team {
+    flex: 4;
+  }
+
+  .rating {
+    flex: 2;
+    text-align: center;
+  }
+}
+
+.sn-table {
+  padding-top: 2em;
+  display: flex;
+  flex-direction: column;
+
+  .sn-row {
     display: flex;
     line-height: 1.5;
     min-height: 3em;
     align-items: center;
+    border-top: 1px solid #ddd;
 
-    .team-name {
-      flex: 2;
-      padding-left: 0.1em;
-      padding-right: 0.1em;
-    }
-
-    .result {
-      flex: 1;
-      padding-left: 0.1em;
-      padding-right: 0.1em;
-      text-align: center;
+    &.no-border {
+      border-top: 0;
     }
 
     &.header {
       font-weight: bold;
-      border-bottom: 1px solid #ddd;
       align-items: flex-end;
       min-height: 1.5em;
-    }
-
-    &.game {
-      border-top: 1px solid #ddd;
+      border-top: 0;
+      border-bottom: 1px solid #ddd;
     }
   }
 }

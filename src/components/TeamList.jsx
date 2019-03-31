@@ -2,37 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { round } from '../utils/utils';
-import { Table } from 'react-bootstrap';
 
 const TeamList = ({ sortBy, teams, year }) => {
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th />
-          <th>Team</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-      <tbody>
-        {teams.sort(sortBy).map((team, index) => {
-          return (
-            <tr key={team.id}>
-              <td>{index + 1}</td>
-              <td>
-                <Link to={`/${year}/teams/${team.id}`}>{team.name}</Link>
-                {team.record && (
-                  <span className="record">
-                    ({team.record.wins}-{team.record.losses})
-                  </span>
-                )}
-              </td>
-              <td>{team.ratings && round(team.ratings.overall, 2)}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
+    <div className="team-list sn-table">
+      <div className="header sn-row">
+        <div className="rank" />
+        <div className="team">Team</div>
+        <div className="rating">Rating</div>
+      </div>
+      {teams.sort(sortBy).map((team, index) => {
+        return (
+          <div key={team.id} className="sn-row">
+            <div className="rank">{index + 1}</div>
+            <div className="team">
+              <Link to={`/${year}/teams/${team.id}`}>{team.name}</Link>
+              {team.record && (
+                <span className="record">
+                  ({team.record.wins}-{team.record.losses})
+                </span>
+              )}
+            </div>
+            <div className="rating">{team.ratings && round(team.ratings.overall, 2)}</div>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import GameDate from './GameDate';
@@ -10,57 +9,53 @@ import TeamRank from './TeamRank';
 
 const TeamGameList = ({ games, year }) => {
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Opponent</th>
-          <th>Score</th>
-          <th>Error</th>
-        </tr>
-      </thead>
-      <tbody>
-        {games.map((game, index) => {
-          return (
-            <tr key={index} className="team-game-row">
-              <td>
-                <GameDate iso8601dateString={game.date} />
-              </td>
-              <td>
-                {!game.opponent.nonDivisional
-                  ? [
-                      <TeamRank key="rank" team={game.opponent} />,
-                      <Link key="link" to={`/${year}/teams/${game.opponent.id}`}>
-                        {game.opponent.name}
-                      </Link>
-                    ]
-                  : game.opponent.name}
-              </td>
-              <td>
-                {game.result ? (
+    <div className="sn-table team-game-list">
+      <div className="header sn-row">
+        <div className="date">Date</div>
+        <div className="opponent">Opponent</div>
+        <div className="score">Score</div>
+        <div className="error">Error</div>
+      </div>
+      {games.map((game, index) => {
+        return (
+          <div key={`game-row-${index}`} className="sn-row">
+            <div className="date">
+              <GameDate iso8601dateString={game.date} />
+            </div>
+            <div className="opponent">
+              {!game.opponent.nonDivisional
+                ? [
+                    <TeamRank key="rank" team={game.opponent} />,
+                    <Link key="link" to={`/${year}/teams/${game.opponent.id}`}>
+                      {game.opponent.name}
+                    </Link>
+                  ]
+                : game.opponent.name}
+            </div>
+            <div className="score">
+              {game.result ? (
+                <GameResult
+                  pointsFor={game.result.pointsFor}
+                  pointsAgainst={game.result.pointsAgainst}
+                />
+              ) : (
+                game.predictions && (
                   <GameResult
-                    pointsFor={game.result.pointsFor}
-                    pointsAgainst={game.result.pointsAgainst}
+                    prediction
+                    unimportant={moment(game.date).isAfter}
+                    pointsFor={game.predictions.llsGoalsFor}
+                    pointsAgainst={game.predictions.llsGoalsAgainst}
                   />
-                ) : (
-                  game.predictions && (
-                    <GameResult
-                      prediction
-                      unimportant={moment(game.date).isAfter}
-                      pointsFor={game.predictions.llsGoalsFor}
-                      pointsAgainst={game.predictions.llsGoalsAgainst}
-                    />
-                  )
-                )}
-              </td>
-              <td>
-                <GameError game={game} />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
+                )
+              )}
+            </div>
+            <div className="error">
+              <GameError game={game} />
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

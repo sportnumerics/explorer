@@ -10,11 +10,11 @@ class GamesList extends React.Component {
   render() {
     const { fetching, year, date, games } = this.props;
     return [
-      <div key={`${date}-date`} className="date gbd-row" id={date}>
+      <div key={`${date}-date`} className="date sn-row no-border" id={date}>
         {moment(date).format('ddd MMM D')}
       </div>,
       fetching && <LoadingBar key="loader" />,
-      <div key={`${date}-header`} className="header gbd-row">
+      <div key={`${date}-header`} className="header sn-row">
         <div className="team-name">Away</div>
         <div className="team-name">Home</div>
         <div className="result">Score</div>
@@ -47,7 +47,7 @@ function gameSort(game) {
     : Infinity
 }
 
-const PlaceholderRow = () => <div className="game gbd-row" />;
+const PlaceholderRow = () => <div className="sn-row" />;
 
 const GameRow = ({ year, date, game }) => {
   const ordered =
@@ -65,7 +65,7 @@ const GameRow = ({ year, date, game }) => {
           predictions: game.predictions && game.predictions
         };
   return (
-    <div className="game gbd-row">
+    <div className="sn-row">
       <div className="team-name">
         <TeamName year={year} team={ordered.away} />
       </div>
