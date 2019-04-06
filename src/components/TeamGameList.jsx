@@ -25,6 +25,7 @@ const TeamGameList = ({ games, year }) => {
             <div className="opponent">
               {!game.opponent.nonDivisional
                 ? [
+                    <GameLocation key="location" location={game.location} />,
                     <TeamRank key="rank" team={game.opponent} />,
                     <Link key="link" to={`/${year}/teams/${game.opponent.id}`}>
                       {game.opponent.name}
@@ -58,6 +59,14 @@ const TeamGameList = ({ games, year }) => {
     </div>
   );
 };
+
+const GameLocation = ({location}) => {
+  if (location.type !== 'home') {
+    return <span className="at">at</span>;
+  } else {
+    return null;
+  }
+}
 
 const GameError = ({ game }) => {
   if (game.result && game.predictions) {
