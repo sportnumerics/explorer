@@ -1,5 +1,8 @@
 const YEARS = [
   {
+    id: '2020'
+  },
+  {
     id: '2019'
   },
   {
@@ -13,6 +16,6 @@ const YEARS = [
   }
 ];
 
-export const DEFAULT_YEAR = 2019;
+export const DEFAULT_YEAR = 2020;
 
 export default YEARS;
