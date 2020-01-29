@@ -1,5 +1,4 @@
 {
-  "docker": true,
   "branches": {
     "master": true,
     "dev": true
