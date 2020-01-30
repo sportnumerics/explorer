@@ -2,10 +2,6 @@
 
 set -e
 
-./decrypt.sh
-source ./env/env.sh
-unset AWS_SESSION_TOKEN
-
 ACTIVE_PROD_DEPLOYMENT=$(./node_modules/.bin/explorer-cdn describe-active-stage)
 
 if [[ "$LAMBCI_BRANCH" = "master" ]]; then
@@ -34,8 +30,6 @@ APP_NAME="sportnumerics-explorer"
 STACK_NAME="$APP_NAME-$STAGE"
 BUCKET_NAME="$APP_NAME-$STAGE"
 TEMPLATE_FILE="cloudformation.yml"
-
-aws configure set region $AWS_DEFAULT_REGION
 
 export EXPLORER_API_URL="https://$EXPLORER_API_PREFIX.sportnumerics.com"
 export GIT_SHA=`git rev-parse HEAD`
