@@ -11,10 +11,10 @@ const TeamList = ({ sortBy, teams, year }) => {
         <div className="team">Team</div>
         <div className="rating">Rating</div>
       </div>
-      {teams.sort(sortBy).map((team, index) => {
+      {teams.sort(sortBy).map((team) => {
         return (
           <div key={team.id} className="sn-row">
-            <div className="rank">{index + 1}</div>
+            <div className="rank">{team.rank}</div>
             <div className="team">
               <Link to={`/${year}/teams/${team.id}`}>{team.name}</Link>
               {team.record && (
