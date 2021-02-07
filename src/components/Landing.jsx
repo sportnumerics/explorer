@@ -1,8 +1,9 @@
-import React from 'react'
-import { Grid, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
-import logo from 'responsive-loader?sizes[]=352,sizes[]=704,sizes[]=1056!../images/logo.png'
+import { Col, Grid, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
+
 import { DEFAULT_YEAR } from '../services/years';
+import { LinkContainer } from 'react-router-bootstrap'
+import React from 'react'
+import logo from 'responsive-loader?sizes[]=352,sizes[]=704,sizes[]=1056!../images/logo.png'
 
 const Logo = () => <div className="main-logo-container">
   <img srcSet={logo.srcSet} src={logo.src} sizes="(max-width: 768px) 65vw, 25vw" />
@@ -39,8 +40,8 @@ const Landing = () => (
       </ListGroup>
       <h4>MCLA Lacrosse</h4>
       <ListGroup>
-        <ButtonLink to={`/${DEFAULT_YEAR}/divs/mcla1`}>Division 1</ButtonLink>
-        <ButtonLink to={`/${DEFAULT_YEAR}/divs/mcla2`}>Division 2</ButtonLink>
+        <ButtonLink to={`/2020/divs/mcla1`}>Division 1</ButtonLink>
+        <ButtonLink to={`/2020/divs/mcla2`}>Division 2</ButtonLink>
       </ListGroup>
     </Col>
   </Row></Grid>

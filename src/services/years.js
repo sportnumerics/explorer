@@ -1,6 +1,7 @@
 const YEARS = [
   {
-    id: '2021'
+    id: '2021',
+    unavailable: ['mcla1', 'mcla2']
   },
   {
     id: '2020'

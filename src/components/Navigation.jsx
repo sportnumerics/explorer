@@ -1,10 +1,11 @@
-import React from 'react'
-import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
-import { connect } from 'react-redux'
-import { DEFAULT_DIV } from '../services/divs'
+import { MenuItem, Nav, NavDropdown, Navbar } from 'react-bootstrap'
 import YEARS, { DEFAULT_YEAR } from '../services/years'
+
+import { DEFAULT_DIV } from '../services/divs'
 import { Link } from 'react-router-dom'
+import { LinkContainer } from 'react-router-bootstrap'
+import React from 'react'
+import { connect } from 'react-redux'
 import { fetchDivsIfNecessary } from '../actions/fetchDivs';
 
 const YearMenuItem = ({currentDiv, toYear, onSelect}) => (
@@ -22,6 +23,10 @@ class Navigation extends React.Component {
 
   render() {
     const {params, years, divs} = this.props
+    const currentDiv = params.div || DEFAULT_DIV;
+    const currentYearId = params.year || DEFAULT_YEAR;
+    const currentYear = years.find(year => year.id === currentYearId)
+    console.log('currentYear', currentYear);
     return (
       <Navbar inverse fixedTop collapseOnSelect>
         <Navbar.Header>
@@ -33,10 +38,14 @@ class Navigation extends React.Component {
         <Navbar.Collapse>
         <Nav>
         <NavDropdown title='Years' id='basic-nav-dropdown'>
-          { years.map((year, i) => <YearMenuItem key={i} currentDiv={ params.div || DEFAULT_DIV } toYear={year.id} />) }
+          { years
+              .filter(year => !year.unavailable?.includes(currentDiv))
+              .map((year, i) => <YearMenuItem key={i} currentDiv={ currentDiv } toYear={year.id} />) }
         </NavDropdown>
         <NavDropdown title='Divisions' id='basic-nav-dropdown'>
-          { divs && divs.map((div, i) => <DivLink key={i} currentYear={params.year || DEFAULT_YEAR } toDiv={div} />) }
+          { divs && divs
+              .filter(div => !currentYear?.unavailable?.includes(div.id))
+              .map((div, i) => <DivLink key={i} currentYear={ currentYearId } toDiv={div} />) }
         </NavDropdown>
         </Nav>
         </Navbar.Collapse>
