@@ -47,5 +47,5 @@ else
 fi
 
 aws configure set preview.cloudfront true
-aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths *
+aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths "/*"
 
