@@ -5,24 +5,24 @@ Parameters:
     Type: String
     Default: dev
     AllowedValues:
-    - dev
-    - prodgreen
-    - prodblue
+      - dev
+      - prodgreen
+      - prodblue
     Description: Stage to deploy
 Mappings:
   StageMapping:
     prodgreen:
       domain: staging-green.sportnumerics.com
-      certificate: arn:aws:acm:us-east-1:265978616089:certificate/7140c26c-5b35-4f21-b16d-695bf5a659e6
+      certificate: arn:aws:acm:us-east-1:265978616089:certificate/02636181-f1d6-4cf9-8fe6-c99976b2b78a
     prodblue:
       domain: staging-blue.sportnumerics.com
-      certificate: arn:aws:acm:us-east-1:265978616089:certificate/7140c26c-5b35-4f21-b16d-695bf5a659e6
+      certificate: arn:aws:acm:us-east-1:265978616089:certificate/02636181-f1d6-4cf9-8fe6-c99976b2b78a
 Conditions:
   ProdCondition:
     Fn::Not:
       - Fn::Equals:
-        - Ref: StageParameter
-        - dev
+          - Ref: StageParameter
+          - dev
 Resources:
   DeploymentBucket:
     Type: AWS::S3::Bucket
@@ -30,9 +30,9 @@ Resources:
       AccessControl: PublicRead
       BucketName:
         Fn::Join:
-        - "-"
-        - - sportnumerics-explorer
-          - Ref: StageParameter
+          - '-'
+          - - sportnumerics-explorer
+            - Ref: StageParameter
   StagingCloudfrontDistribution:
     Type: AWS::CloudFront::Distribution
     Condition: ProdCondition
@@ -40,13 +40,13 @@ Resources:
       DistributionConfig:
         Aliases:
           - Fn::FindInMap:
-            - StageMapping
-            - Ref: StageParameter
-            - domain
+              - StageMapping
+              - Ref: StageParameter
+              - domain
         CustomErrorResponses:
-        - ErrorCode: 404
-          ResponseCode: 200
-          ResponsePagePath: "/index.html"
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: '/index.html'
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: false
@@ -56,16 +56,16 @@ Resources:
         DefaultRootObject: index.html
         Enabled: true
         Origins:
-        - DomainName:
-            Fn::Join:
-            - "."
-            - - Fn::Join:
-                - "-"
-                - - sportnumerics-explorer
-                  - Ref: StageParameter
-              - s3.amazonaws.com
-          Id: DefaultOrigin
-          S3OriginConfig: {}
+          - DomainName:
+              Fn::Join:
+                - '.'
+                - - Fn::Join:
+                      - '-'
+                      - - sportnumerics-explorer
+                        - Ref: StageParameter
+                  - s3.amazonaws.com
+            Id: DefaultOrigin
+            S3OriginConfig: {}
         PriceClass: PriceClass_All
         ViewerCertificate:
           AcmCertificateArn:
@@ -98,15 +98,15 @@ Resources:
         Ref: DeploymentBucket
       PolicyDocument:
         Statement:
-        - Effect: Allow
-          Action: s3:GetObject
-          Principal: "*"
-          Resource:
-            Fn::Join:
-            - ''
-            - - 'arn:aws:s3:::'
-              - Ref: DeploymentBucket
-              - "/*"
+          - Effect: Allow
+            Action: s3:GetObject
+            Principal: '*'
+            Resource:
+              Fn::Join:
+                - ''
+                - - 'arn:aws:s3:::'
+                  - Ref: DeploymentBucket
+                  - '/*'
 Outputs:
   CloudfrontArn:
     Description: Staging cloudfront distribution for sportnumerics frontend
@@ -114,4 +114,4 @@ Outputs:
       Fn::If:
         - ProdCondition
         - Ref: StagingCloudfrontDistribution
-        - "DistributionNotCreated"
+        - 'DistributionNotCreated'
