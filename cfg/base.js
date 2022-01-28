@@ -14,7 +14,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/../dist'),
     filename: 'app.[hash].js',
-    publicPath: defaultSettings.publicPath
+    publicPath: defaultSettings.publicPath,
+    hashFunction: 'sha256'
   },
   devServer: {
     contentBase: './src/',
