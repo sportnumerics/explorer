@@ -1,5 +1,8 @@
 const YEARS = [
   {
+    id: '2022'
+  },
+  {
     id: '2021',
     unavailable: ['mcla1', 'mcla2']
   },
@@ -20,6 +23,6 @@ const YEARS = [
   }
 ];
 
-export const DEFAULT_YEAR = 2021;
+export const DEFAULT_YEAR = 2022;
 
 export default YEARS;

@@ -26,7 +26,6 @@ class Navigation extends React.Component {
     const currentDiv = params.div || DEFAULT_DIV;
     const currentYearId = params.year || DEFAULT_YEAR;
     const currentYear = years.find(year => year.id === currentYearId)
-    console.log('currentYear', currentYear);
     return (
       <Navbar inverse fixedTop collapseOnSelect>
         <Navbar.Header>

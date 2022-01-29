@@ -40,8 +40,8 @@ const Landing = () => (
       </ListGroup>
       <h4>MCLA Lacrosse</h4>
       <ListGroup>
-        <ButtonLink to={`/2020/divs/mcla1`}>Division 1</ButtonLink>
-        <ButtonLink to={`/2020/divs/mcla2`}>Division 2</ButtonLink>
+        <ButtonLink to={`/${DEFAULT_YEAR}/divs/mcla1`}>Division 1</ButtonLink>
+        <ButtonLink to={`/${DEFAULT_YEAR}/divs/mcla2`}>Division 2</ButtonLink>
       </ListGroup>
     </Col>
   </Row></Grid>
