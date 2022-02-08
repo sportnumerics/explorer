@@ -1,13 +1,12 @@
-import React from 'react';
-import moment from 'moment';
-import { Link } from 'react-router-dom';
-
 import GameDate from './GameDate';
 import GameResult from './GameResult';
-import { round } from '../utils/utils';
+import { Link } from 'react-router-dom';
+import React from 'react';
 import TeamRank from './TeamRank';
+import moment from 'moment';
+import { round } from '../utils/utils';
 
-const TeamGameList = ({ games, year }) => {
+const TeamGameList = ({ games, year, div }) => {
   return (
     <div className="sn-table team-game-list">
       <div className="header sn-row">
@@ -26,7 +25,7 @@ const TeamGameList = ({ games, year }) => {
               {!game.opponent.nonDivisional
                 ? [
                     <GameLocation key="location" location={game.location} />,
-                    <TeamRank key="rank" team={game.opponent} />,
+                    <TeamRank key="rank" team={game.opponent} div={div} />,
                     <Link key="link" to={`/${year}/teams/${game.opponent.id}`}>
                       {game.opponent.name}
                     </Link>
