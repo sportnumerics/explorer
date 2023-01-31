@@ -3,12 +3,22 @@ import handleFetch from '../utils/handleFetch';
 
 function sortByOverallRating(a,b) {
   if (a.ratings && b.ratings) {
-    return b.ratings.overall - a.ratings.overall;
+    const diff = b.ratings.overall - a.ratings.overall;
+    if (diff === 0) {
+      return sortByName(a,b);
+    }
+    return diff;
   } else if (a.ratings) {
     return -1;
-  } else {
+  } else if (b.ratings) {
     return 1;
+  } else {
+    return sortByName(a, b);
   }
+}
+
+function sortByName(a,b) {
+  return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
 }
 
 const initialState = {
