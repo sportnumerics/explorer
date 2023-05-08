@@ -1,4 +1,0 @@
-const.isFetching	/Users/wjames/dev/sports-predictions/explorer/src/reducers/teams.js	/^  isFetching: true,$/;"	property	line:5
-const.result	/Users/wjames/dev/sports-predictions/explorer/src/reducers/teams.js	/^  result: []$/;"	property	line:6
-teams	/Users/wjames/dev/sports-predictions/explorer/src/reducers/teams.js	/^function teams(state = initialState, action) {$/;"	function	line:9
-teams	/Users/wjames/dev/sports-predictions/explorer/src/reducers/teams.js	/^function teams(state = initialState, action) {$/;"	function	line:9
