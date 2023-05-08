@@ -127,7 +127,7 @@ class GamesIndex {
   }
 
   defaultDate() {
-    if (this.areThereGamesAfter(moment())) {
+    if (this.areThereGamesOnOrAfter(moment())) {
       return moment();
     } else {
       return _.first(this.sortedGameDates());
@@ -170,14 +170,14 @@ class GamesIndex {
     return moment(date).diff(_.first(dates), 'days') > 0;
   }
 
-  areThereGamesAfter(date) {
+  areThereGamesOnOrAfter(date) {
     if (!this.games || !date) {
       return false;
     }
 
     const dates = this.sortedGameDates();
 
-    return moment(_.last(dates)).diff(date, 'days') > 0;
+    return moment(_.last(dates)).diff(date, 'days') >= 0;
   }
 
   sortedGameDates() {
